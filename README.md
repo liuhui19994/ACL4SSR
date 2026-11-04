@@ -474,3 +474,70 @@ firebaseinstallations-pa.googleapis.com
 firebaseinstallations.googleapis.com
 firebaseinstallations.googleapis.cn
 ```
+
+---
+
+## 🔗 rule-provider 为什么用 commit-sha 的 raw URL
+
+### 两个坑
+
+**坑 1：`@main` 的 raw URL 有 Fastly CDN 缓存**
+
+实测：commit 后连续 6 次拉 `raw.githubusercontent.com/.../main/Clash/domain/Gemini-Full.yaml`，间隔 15 秒，共 90 秒，**全部返回旧内容**（1,926 B / 58 条），新加的 `signalr-pa` 一条都没有。
+
+加 `?t=<时间戳>` 也无效 —— raw 的 CDN 对 query string 不做区分。
+
+**换成 commit-sha 路径立刻就好：**
+
+```
+https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/...           → 1,926 B（旧）
+https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b/...        → 1,960 B（新，含 signalr-pa）
+```
+
+因为 sha 路径 CDN 从未缓存过，直接回源。
+
+**坑 2：mihomo 按 `path` 做本地缓存**
+
+`rule-providers` 的 `path:` 是本地落盘位置。如果只换 `url` 不换 `path`，mihomo 看到本地文件还在、`interval` 没到期，**就不重新下载**。
+
+表现就是：改了 url、重启了 OpenClash，连接列表里规则还是老的。
+
+**所以 `path` 必须跟着版本走：**
+
+```yaml
+gemini:
+  type: http
+  behavior: domain
+  url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/<sha>/Clash/domain/Gemini-Full.yaml"
+  path: ./ruleset/gemini_v3.yaml      # ← 版本号写进文件名
+  interval: 3600                       # ← 1 小时，不是 1 天
+  proxy: DIRECT
+```
+
+### 更新规则时的完整流程
+
+```bash
+cd /root/.hermes/workspace/ACL4SSR-work
+# 1. 改 Clash/domain/*.yaml
+# 2. 提交
+git add -A && git commit -m "..." && git push private main
+# 3. 拿新 sha
+SHA=$(git rev-parse HEAD)
+# 4. 把两份 yaml 里 8 个 provider 的 url 换成新 sha，path 的版本号 +1
+#    然后把新配置部署出去
+```
+
+**8 个走本仓库的 provider：**
+
+| key | 文件 |
+|---|---|
+| `tiktok` | `Clash/domain/TikTok.yaml` |
+| `google` | `Clash/domain/Google.yaml` |
+| `meta` | `Clash/domain/Meta.yaml` |
+| `muse` | `Clash/domain/Muse.yaml` |
+| `gemini` | `Clash/domain/Gemini-Full.yaml` |
+| `google_fcm` | `Clash/domain/GoogleFCM.yaml` |
+| `ai_all` | `Clash/domain/AI-All.yaml` |
+| `taiwan_media` | `Clash/domain/TaiwanMedia.yaml` |
+
+另外 28 个 provider 仍指向 `cmliu/ACL4SSR` 上游（`@main` 和 `@433381eb` 两种），**没动**。
