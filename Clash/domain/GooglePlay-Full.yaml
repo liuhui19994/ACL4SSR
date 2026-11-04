@@ -1,17 +1,9 @@
-# Google Play 商店（含 APK 下载 CDN gvt1/2/3）
-# 
-# 生成: 2026-11-04 21:05:19 (UTC+8)   条数: 21
-# 源: MetaCubeX/meta-rules-dat geosite
-# 用法: rule-providers -> behavior: domain, format: yaml
 payload:
+  - '+.android.clients.google.com'
+  - '+.android.com'
+  - '+.dl.google.com'
+  - '+.ggpht.com'
   - '+.googleplay.com'
-  - '+.xn--ngstr-lra8j.com'
-  - '+.play-fe.googleapis.com'
-  - '+.play-games.googleusercontent.com'
-  - '+.play-lh.googleusercontent.com'
-  - '+.play.google.com'
-  - '+.play.googleapis.com'
-  - 'redirector.c.play.google.com'
   - '+.gvt0.com'
   - '+.gvt1.com'
   - '+.gvt2.com'
@@ -20,8 +12,12 @@ payload:
   - '+.gvt6.com'
   - '+.gvt7.com'
   - '+.gvt9.com'
-  - 'dl.google.com'
-  - 'redirector.gvt1.com'
-  - 'android.clients.google.com'
-  - 'c.android.clients.google.com'
-  - '+.android.clients.google.com'
+  - '+.play-fe.googleapis.com'
+  - '+.play-games.googleusercontent.com'
+  - '+.play-lh.googleusercontent.com'
+  - '+.play.google.com'
+  - '+.play.googleapis.com'
+  - '+.redirector.c.play.google.com'
+  - '+.redirector.gvt1.com'
+  - '+.services.googleapis.cn'
+  - '+.xn--ngstr-lra8j.com'

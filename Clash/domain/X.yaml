@@ -1,22 +1,22 @@
-# X / Twitter（含 twimg 图片视频 CDN）
-# 
-# 生成: 2026-11-04 21:05:19 (UTC+8)   条数: 25
-# 源: MetaCubeX/meta-rules-dat geosite
-# 用法: rule-providers -> behavior: domain, format: yaml
 payload:
-  - '+.twitter.jp'
-  - '+.twitter.biz'
+  - '+.ads-twitter.com'
+  - '+.api.x.com'
+  - '+.cms-twdigitalassets.com'
+  - '+.grok.com'
+  - '+.periscope.tv'
   - '+.pscp.tv'
   - '+.t.co'
   - '+.tellapart.com'
   - '+.tweetdeck.com'
+  - '+.twimg.co'
   - '+.twimg.com'
-  - '+.twittercommunity.com'
-  - '+.x.com'
-  - '+.twitter.com'
-  - '+.periscope.tv'
-  - '+.cms-twdigitalassets.com'
+  - '+.twimg.org'
   - '+.twitpic.com'
+  - '+.twitter.biz'
+  - '+.twitter.com'
+  - '+.twitter.jp'
+  - '+.twitter.map.fastly.net'
+  - '+.twittercommunity.com'
   - '+.twitterflightschool.com'
   - '+.twitterinc.com'
   - '+.twitteroauth.com'
@@ -26,6 +26,4 @@ payload:
   - '+.twttr.net'
   - '+.twvid.com'
   - '+.vine.co'
-  - '+.twitter.map.fastly.net'
-  - '+.ads-twitter.com'
-  - '+.api.x.com'
+  - '+.x.com'

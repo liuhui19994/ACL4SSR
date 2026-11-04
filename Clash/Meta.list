@@ -1,0 +1,46 @@
+# NAME: Meta
+# Meta 全家桶：Facebook / Instagram / Messenger / Threads / WhatsApp / Meta AI / Muse AI
+# 来源: DNS 实测 + 证书 SAN 交叉验证（2026-11-04）
+#
+# 为什么 Muse AI 需要这一组：
+#   muse.ai 证书 subject = O=Meta Platforms, Inc., L=Menlo Park, CN=*.muse.ai
+#   首页直接引用 www.facebook.com / www.meta.com
+#   api.muse.ai / auth.muse.ai / security.muse.ai 全部 CNAME 到 star.c10r.facebook.com
+#   ⇒ Muse AI 就是 Meta AI 的另一个域名，登录、鉴权、CDN 全走 Meta 自家边缘
+#
+# 实测：以上 24 个域名的 A 记录【全部】落在 57.144.0.0/16（AS32934 Facebook, Inc.）
+#      物理位置新加坡，不是美国 —— 所以不要叫「美国媒体」
+#
+# 为什么不抄 blackmatrix7 的 Facebook 列表（570 条）：
+#   里面 ~500 条是抢注的拼写错误域名（faacebok.com / facebooik.com / facebopk.com 等），
+#   属于钓鱼/广告站，不是 Meta 的服务。收进来只会拖慢匹配、制造误伤。
+#   这里只保留真实在用的服务域名。
+#
+# 未收录（会误伤）：
+#   groups.com / i.org / klik.me / nextstop.com / parse.com / reactjs.org 等泛域名
+
+# TOTAL: 24
+DOMAIN-SUFFIX,facebook.com
+DOMAIN-SUFFIX,facebook.net
+DOMAIN-SUFFIX,fb.com
+DOMAIN-SUFFIX,fb.me
+DOMAIN-SUFFIX,fbcdn.net
+DOMAIN-SUFFIX,fbsbx.com
+DOMAIN-SUFFIX,accountkit.com
+DOMAIN-SUFFIX,instagram.com
+DOMAIN-SUFFIX,cdninstagram.com
+DOMAIN-SUFFIX,instagr.am
+DOMAIN-SUFFIX,ig.me
+DOMAIN-SUFFIX,messenger.com
+DOMAIN-SUFFIX,m.me
+DOMAIN-SUFFIX,meta.com
+DOMAIN-SUFFIX,meta.ai
+DOMAIN-SUFFIX,ai.meta.com
+DOMAIN-SUFFIX,muse.ai
+DOMAIN-SUFFIX,threads.net
+DOMAIN-SUFFIX,threads.com
+DOMAIN-SUFFIX,whatsapp.com
+DOMAIN-SUFFIX,whatsapp.net
+DOMAIN-SUFFIX,wa.me
+DOMAIN-SUFFIX,workplace.com
+DOMAIN-SUFFIX,oculus.com

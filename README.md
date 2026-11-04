@@ -17,12 +17,13 @@
 | 文件 | 条数 | 覆盖 |
 |---|---:|---|
 | `TikTok.list` | 42 | 主站 + App API + CDN + 直播 + Shop + 美/欧区 |
-| `X.list` | 25 | x.com + twitter.com + twimg 图片/视频 CDN + t.co |
+| `X.list` | 28 | x.com + twitter.com + twimg 图片/视频 CDN + t.co |
 | `Muse.list` | 4 | `*.muse.ai` 全子域 + `meta.ai` |
 | `Gemini-Full.list` | 49 | Gemini 网页 + App 私有端点 + NotebookLM + AI Studio |
-| `GooglePlay-Full.list` | 21 | Play API + 图片 + **APK 下载 CDN gvt1/2/3** + 设备注册 |
+| `GooglePlay-Full.list` | 22 | Play API + 图片 + **APK 下载 CDN gvt1/2/3** + 设备注册 |
 | `GoogleFCM.list` | 12 | FCM 推送全部 mtalk 节点 |
 | `AI-All.list` | 213 | ChatGPT / Claude / Grok / Perplexity / Copilot 等全量 |
+| `Meta.list` | 24 | Facebook / Instagram / Messenger / Threads / WhatsApp / Meta AI / Muse AI |
 | `TaiwanMedia.list` | 15 | 台湾流媒体全集：LiTV / 4GTV / OFiii / 巴哈姆特 / Hami Video / KKTV / friDay / LINE TV / myVideo / CatchPlay |
 
 > `Gemini-Full.list` 取代上游 `Gemini.list`（13 条，2025-06 停更）。
@@ -39,9 +40,9 @@
 
 | 项目 | 原有 | 变动 | 现在 |
 |---|---:|---|---:|
-| 策略组 | 27 | +4（🎵 TikTok / 🐦 推特X / ▶️ 谷歌商店 / 📺 台湾媒体）<br>-8（奈飞 / 哔哩哔哩 / 微软×3 / 游戏平台 / 网易音乐 / 巴哈姆特） | **23** |
-| rule-provider | 41 | +8 / -13 | **36** |
-| 规则 | 43 | +8 / -13 | **38** |
+| 策略组 | 27 | +5（🎵 TikTok / 🐦 推特X / 📱 Meta / ▶️ 谷歌商店 / 📺 台湾媒体）<br>-8（奈飞 / 哔哩哔哩 / 微软×3 / 游戏平台 / 网易音乐 / 巴哈姆特） | **24** |
+| rule-provider | 41 | +9 / -13 | **37** |
+| 规则 | 43 | +9 / -13 | **39** |
 
 - `🤖 OpenAi` 组复用，Muse / Gemini / AI-All 三条规则都指向它
 - `📢 谷歌FCM` 组复用，只换用 12 条完整版 provider（原 `googlefcm_6` 只有部分节点）
@@ -200,3 +201,95 @@ proxy-providers:
 对应地区组会是空的。改 `filter:` 的正则就行，不用动别的。
 
 ★ 机场节点名里带倍率后缀（`| 0.5x`）不影响，正则只做包含匹配。
+
+---
+
+## 📱 Meta 组为什么单独建，不并进 AI 组
+
+### 事实：Muse AI 就是 Meta AI
+
+```
+muse.ai 证书    subject = O="Meta Platforms, Inc.", L=Menlo Park, CN=*.muse.ai
+                SAN     = *.muse.ai, muse.ai
+首页引用        www.facebook.com / www.meta.com
+子域            api.muse.ai / auth.muse.ai / security.muse.ai
+                → 全部 CNAME 到 star.c10r.facebook.com
+A 记录          57.144.152.141  =  AS32934 Facebook, Inc.（物理新加坡）
+```
+
+所以 Muse AI app 登录、鉴权、拉 CDN 全走 Meta 自家边缘。**不给 Meta 建规则，Muse AI 登录必然出问题** —— OAuth 跳到 `facebook.com` 时会落到 `🐟 漏网之鱼`，出口节点跟 AI 组不一致，轻则提示异地登录，重则登录循环。
+
+### 为什么不像你说的那样全部并进 AI 组
+
+| 服务 | 并进 AI 组的问题 |
+|---|---|
+| **Facebook / Instagram** | 日常刷 IG 的流量会全走 AI 节点。机场的 AI 节点通常是**独享 / 高倍率**（3x–10x），刷半小时 IG 能烧掉几天的量。 |
+| **推特 X** | X 对机房 IP 有强风控，登录会要求手机验证。AI 节点恰好是「被大量人用来跑 ChatGPT」的机房 IP，命中风控概率最高。**X 需要单独选一个家宽或原生 IP 节点**，跟 AI 需求相反。 |
+| **谷歌商店** | Play 的 CDN 是 `gvt1.com` / `ggpht.com`，全球都有节点。并进 AI 组意味着**所有 App 下载都走 AI 节点**，一个游戏 2 GB 就是几倍流量。这是纯浪费。 |
+
+### 为什么也不叫「美国媒体」
+
+Meta 的边缘 IP `57.144.152.141` 实测物理位置在**新加坡**，是 AS32934 的 anycast。Facebook / Instagram 跟「美国」没有任何绑定关系。叫美国媒体会误导你以后调节点。
+
+### 实际做法
+
+新建 `📱 Meta`，**默认第一项是 `🤖 OpenAi`**：
+
+```yaml
+- name: 📱 Meta
+  type: select
+  proxies:
+    - 🤖 OpenAi        # ← 默认，跟随 AI 组的出口，保证 OAuth 同地区
+    - 🚀 节点选择
+    - ♻️ 自动选择
+    - 🇺🇲 美国节点
+    - 🇸🇬 狮城节点
+    - 🇭🇰 香港节点
+    - 🇹🇼 台湾节点
+    - 🇯🇵 日本节点
+    - ☑️ 手动切换
+    - DIRECT
+```
+
+这样两头都满足：**Muse app 登录不失败**（跟 AI 同出口），**平时想单独给 IG 换落地也能换**（不用连累 AI）。
+
+### Meta 组覆盖的 24 个域名
+
+```
+facebook.com      facebook.net      fb.com         fb.me
+fbcdn.net         fbsbx.com         accountkit.com
+instagram.com     cdninstagram.com  instagr.am     ig.me
+messenger.com     m.me
+meta.com          meta.ai           ai.meta.com    muse.ai
+threads.net       threads.com
+whatsapp.com      whatsapp.net      wa.me
+workplace.com     oculus.com
+```
+
+**没有抄 blackmatrix7 的 Facebook 列表（570 条）。** 那里面约 500 条是抢注的拼写错误域名——`faacebok.com`、`facebooik.com`、`facebopk.com`、`fcaebook.com` 这类，属于钓鱼和广告站，不是 Meta 的服务。收进来只会拖慢匹配、制造误伤。这里只保留真实在用的服务域名。
+
+同理没收 `groups.com` / `i.org` / `klik.me` / `nextstop.com` / `parse.com` / `reactjs.org` 这些泛域名。
+
+### 验证
+
+`mihomo v1.19.14` 实测，把 `RULE-SET,meta` 指向 `REJECT`：
+
+```
+命中 22/22：
+  www.facebook.com  m.facebook.com  graph.facebook.com  static.xx.fbcdn.net
+  www.instagram.com  i.instagram.com  scontent.cdninstagram.com
+  www.messenger.com  www.meta.com  meta.ai  ai.meta.com
+  muse.ai  api.muse.ai  security.muse.ai
+  www.threads.com  www.whatsapp.com  wa.me  www.workplace.com
+  www.oculus.com  fb.com  ig.me  m.me
+
+未误伤 6/6：
+  www.google.com 200 / www.netflix.com 302 / twitter.com 301
+  x.com 200 / play.google.com 302 / www.baidu.com 200
+```
+
+### 顺带补全的两个列表
+
+**`X.list` 25 → 28 条** —— 原来漏了 `grok.com`（Grok 是 X 的 AI，走同一套 CDN）、`twimg.co`、`twimg.org`。
+
+**`GooglePlay-Full.list` 21 → 22 条** —— 原来 `android.clients.google.com` 重复了两遍，`DOMAIN` 和 `DOMAIN-SUFFIX` 混用有冗余。已去重并统一成 `DOMAIN-SUFFIX`，另补 `ggpht.com` / `android.com` / `services.googleapis.cn`。

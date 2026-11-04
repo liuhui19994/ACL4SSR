@@ -114,6 +114,19 @@ proxy-groups:
       - 🇺🇲 美国节点
       - ☑️ 手动切换
       - DIRECT
+  - name: 📱 Meta
+    type: select
+    proxies:
+      - 🤖 OpenAi
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇺🇲 美国节点
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - ☑️ 手动切换
+      - DIRECT
   - name: ▶️ 谷歌商店
     type: select
     proxies:
@@ -460,8 +473,15 @@ rule-providers:
   x_twitter:
     type: http
     behavior: domain
-    url: http://134.185.85.251/dl/x-twitter-20261104.yaml
+    url: http://134.185.85.251/dl/x-twitter-20261104b.yaml
     path: ./ruleset/x_twitter.yaml
+    interval: 86400
+    proxy: DIRECT
+  meta:
+    type: http
+    behavior: domain
+    url: http://134.185.85.251/dl/meta-20261104.yaml
+    path: ./ruleset/meta.yaml
     interval: 86400
     proxy: DIRECT
   muse:
@@ -481,7 +501,7 @@ rule-providers:
   google_play:
     type: http
     behavior: domain
-    url: http://134.185.85.251/dl/google-play-20261104.yaml
+    url: http://134.185.85.251/dl/google-play-20261104b.yaml
     path: ./ruleset/google_play.yaml
     interval: 86400
     proxy: DIRECT
@@ -513,6 +533,7 @@ rules:
   - RULE-SET,google_play,▶️ 谷歌商店
   - RULE-SET,tiktok,🎵 TikTok
   - RULE-SET,x_twitter,🐦 推特X
+  - RULE-SET,meta,📱 Meta
   - RULE-SET,muse,🤖 OpenAi
   - RULE-SET,gemini,🤖 OpenAi
   - RULE-SET,ai_all,🤖 OpenAi
