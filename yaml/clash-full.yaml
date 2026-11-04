@@ -285,6 +285,7 @@ rule-providers:
     path: ./ruleset/playstore_0.list
     interval: 86400
     format: text
+    proxy: DIRECT
   cfnat_1:
     type: http
     behavior: classical
@@ -292,6 +293,7 @@ rule-providers:
     path: ./ruleset/cfnat_1.list
     interval: 86400
     format: text
+    proxy: DIRECT
   localareanetwork_2:
     type: http
     behavior: classical
@@ -299,6 +301,7 @@ rule-providers:
     path: ./ruleset/localareanetwork_2.list
     interval: 86400
     format: text
+    proxy: DIRECT
   unban_3:
     type: http
     behavior: classical
@@ -306,6 +309,7 @@ rule-providers:
     path: ./ruleset/unban_3.list
     interval: 86400
     format: text
+    proxy: DIRECT
   banad_4:
     type: http
     behavior: classical
@@ -313,6 +317,7 @@ rule-providers:
     path: ./ruleset/banad_4.list
     interval: 86400
     format: text
+    proxy: DIRECT
   banprogramad_5:
     type: http
     behavior: classical
@@ -320,42 +325,49 @@ rule-providers:
     path: ./ruleset/banprogramad_5.list
     interval: 86400
     format: text
+    proxy: DIRECT
   googlefcm_6:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/GoogleFCM.yaml
     path: ./ruleset/googlefcm_6.yaml
     interval: 86400
+    proxy: DIRECT
   googlecn_7:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/GoogleCN.yaml
     path: ./ruleset/googlecn_7.yaml
     interval: 86400
+    proxy: DIRECT
   steamcn_8:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/SteamCN.yaml
     path: ./ruleset/steamcn_8.yaml
     interval: 86400
+    proxy: DIRECT
   apple_12:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Apple.yaml
     path: ./ruleset/apple_12.yaml
     interval: 86400
+    proxy: DIRECT
   telegram_13:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Telegram.yaml
     path: ./ruleset/telegram_13.yaml
     interval: 86400
+    proxy: DIRECT
   openai_14:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/OpenAi.yaml
     path: ./ruleset/openai_14.yaml
     interval: 86400
+    proxy: DIRECT
   ai_15:
     type: http
     behavior: classical
@@ -363,6 +375,7 @@ rule-providers:
     path: ./ruleset/ai_15.list
     interval: 86400
     format: text
+    proxy: DIRECT
   copilot_16:
     type: http
     behavior: classical
@@ -370,6 +383,7 @@ rule-providers:
     path: ./ruleset/copilot_16.list
     interval: 86400
     format: text
+    proxy: DIRECT
   githubcopilot_17:
     type: http
     behavior: classical
@@ -377,6 +391,7 @@ rule-providers:
     path: ./ruleset/githubcopilot_17.list
     interval: 86400
     format: text
+    proxy: DIRECT
   claude_18:
     type: http
     behavior: classical
@@ -384,12 +399,14 @@ rule-providers:
     path: ./ruleset/claude_18.list
     interval: 86400
     format: text
+    proxy: DIRECT
   youtube_25:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/YouTube.yaml
     path: ./ruleset/youtube_25.yaml
     interval: 86400
+    proxy: DIRECT
   chinamedia_30:
     type: http
     behavior: classical
@@ -397,6 +414,7 @@ rule-providers:
     path: ./ruleset/chinamedia_30.list
     interval: 86400
     format: text
+    proxy: DIRECT
   proxymedia_31:
     type: http
     behavior: classical
@@ -404,6 +422,7 @@ rule-providers:
     path: ./ruleset/proxymedia_31.list
     interval: 86400
     format: text
+    proxy: DIRECT
   emby_32:
     type: http
     behavior: classical
@@ -411,12 +430,14 @@ rule-providers:
     path: ./ruleset/emby_32.list
     interval: 86400
     format: text
+    proxy: DIRECT
   proxygfwlist_33:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/ProxyGFWlist.yaml
     path: ./ruleset/proxygfwlist_33.yaml
     interval: 86400
+    proxy: DIRECT
   proxy_34:
     type: http
     behavior: classical
@@ -424,6 +445,7 @@ rule-providers:
     path: ./ruleset/proxy_34.list
     interval: 86400
     format: text
+    proxy: DIRECT
   direct_35:
     type: http
     behavior: classical
@@ -431,6 +453,7 @@ rule-providers:
     path: ./ruleset/direct_35.list
     interval: 86400
     format: text
+    proxy: DIRECT
   chinadomain_36:
     type: http
     behavior: classical
@@ -438,12 +461,14 @@ rule-providers:
     path: ./ruleset/chinadomain_36.list
     interval: 86400
     format: text
+    proxy: DIRECT
   chinacompanyip_37:
     type: http
     behavior: ipcidr
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/ChinaCompanyIp.yaml
     path: ./ruleset/chinacompanyip_37.yaml
     interval: 86400
+    proxy: DIRECT
   download_38:
     type: http
     behavior: classical
@@ -451,6 +476,7 @@ rule-providers:
     path: ./ruleset/download_38.list
     interval: 86400
     format: text
+    proxy: DIRECT
   adobe_39:
     type: http
     behavior: classical
@@ -458,6 +484,7 @@ rule-providers:
     path: ./ruleset/adobe_39.list
     interval: 86400
     format: text
+    proxy: DIRECT
   idm_40:
     type: http
     behavior: classical
@@ -465,6 +492,7 @@ rule-providers:
     path: ./ruleset/idm_40.list
     interval: 86400
     format: text
+    proxy: DIRECT
   tiktok:
     type: http
     behavior: domain
@@ -514,7 +542,6 @@ rule-providers:
     path: ./ruleset/ai_all_v3.yaml
     interval: 3600
     proxy: DIRECT
-
   taiwan_media:
     type: http
     behavior: domain
@@ -522,7 +549,6 @@ rule-providers:
     path: ./ruleset/taiwan_media_v3.yaml
     interval: 3600
     proxy: DIRECT
-
 rules:
   # ---- 精确匹配优先：FCM 推送 / TikTok / AI 具名域名 ----
   - RULE-SET,google_fcm,📢 谷歌FCM
