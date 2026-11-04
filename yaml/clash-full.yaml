@@ -468,59 +468,59 @@ rule-providers:
   tiktok:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/TikTok.yaml"
-    path: ./ruleset/tiktok.yaml
-    interval: 86400
+    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/TikTok.yaml"
+    path: ./ruleset/tiktok_v3.yaml
+    interval: 3600
     proxy: DIRECT
   google:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/Google.yaml"
-    path: ./ruleset/google.yaml
-    interval: 86400
+    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Google.yaml"
+    path: ./ruleset/google_v3.yaml
+    interval: 3600
     proxy: DIRECT
   meta:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/Meta.yaml"
-    path: ./ruleset/meta.yaml
-    interval: 86400
+    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Meta.yaml"
+    path: ./ruleset/meta_v3.yaml
+    interval: 3600
     proxy: DIRECT
   muse:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/Muse.yaml"
-    path: ./ruleset/muse.yaml
-    interval: 86400
+    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Muse.yaml"
+    path: ./ruleset/muse_v3.yaml
+    interval: 3600
     proxy: DIRECT
   gemini:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/Gemini-Full.yaml"
-    path: ./ruleset/gemini.yaml
-    interval: 86400
+    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Gemini-Full.yaml"
+    path: ./ruleset/gemini_v3.yaml
+    interval: 3600
     proxy: DIRECT
   google_fcm:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/GoogleFCM.yaml"
-    path: ./ruleset/google_fcm.yaml
-    interval: 86400
+    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/GoogleFCM.yaml"
+    path: ./ruleset/google_fcm_v3.yaml
+    interval: 3600
     proxy: DIRECT
   ai_all:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/AI-All.yaml"
-    path: ./ruleset/ai_all.yaml
-    interval: 86400
+    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/AI-All.yaml"
+    path: ./ruleset/ai_all_v3.yaml
+    interval: 3600
     proxy: DIRECT
 
   taiwan_media:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/TaiwanMedia.yaml"
-    path: ./ruleset/taiwan_media.yaml
-    interval: 86400
+    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/TaiwanMedia.yaml"
+    path: ./ruleset/taiwan_media_v3.yaml
+    interval: 3600
     proxy: DIRECT
 
 rules:
