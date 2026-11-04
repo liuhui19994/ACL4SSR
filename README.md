@@ -541,3 +541,106 @@ SHA=$(git rev-parse HEAD)
 | `taiwan_media` | `Clash/domain/TaiwanMedia.yaml` |
 
 另外 28 个 provider 仍指向 `cmliu/ACL4SSR` 上游（`@main` 和 `@433381eb` 两种），**没动**。
+
+---
+
+## 📥 导入 OpenClash + 换任意机场订阅
+
+### 一、导入
+
+OpenClash → **配置管理** → 上传文件类型选 **配置文件 (.yaml)** → 选择 `clash-airport.yaml` → **上传** → 点该行的 **应用**。
+
+或者更省事：**配置订阅** 标签 → 新增订阅 → 订阅地址填
+
+```
+https://raw.githubusercontent.com/liuhui19994/ACL4SSR/<sha>/yaml/clash-airport.yaml
+```
+
+### 二、换机场只改一行
+
+`proxy-providers.airport.url`：
+
+```yaml
+proxy-providers:
+  airport:
+    type: http
+    url: "https://你的机场订阅地址"     # ← 只改这一行
+    path: ./providers/airport.yaml
+    interval: 86400
+    proxy: DIRECT                      # ← 必须有
+    header:
+      User-Agent:
+        - "clash-verge/v1.7.0"
+        - "clash.meta/v1.19.14"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+```
+
+**任何机场的订阅地址都能填**，只要它是 Clash/Mihomo 格式或 v2ray 通用格式。5 个地区组靠 `filter` 自动从节点名里挑：
+
+| 组 | filter 关键词 |
+|---|---|
+| 🇭🇰 香港节点 | `港\|HK\|hk\|Hong Kong\|HongKong\|hongkong\|HKG` |
+| 🇯🇵 日本节点 | `日本\|川日\|东京\|大阪\|泉日\|埼玉\|沪日\|深日\|[^-]日\|JP\|Japan\|Tokyo\|NRT\|KIX` |
+| 🇺🇲 美国节点 | `美\|波特兰\|达拉斯\|俄勒冈\|凤凰城\|费利蒙\|硅谷\|拉斯维加斯\|洛杉矶\|圣何塞\|圣克拉拉\|西雅图\|芝加哥\|US\|United States\|ATL\|BUF\|DFW\|EWR\|IAD\|LAX\|MCI\|MIA\|ORD\|PHX\|PDX\|SEA\|SJC` |
+| 🇹🇼 台湾节点 | `台\|新北\|彰化\|TW\|Taiwan\|TPE\|KHH` |
+| 🇸🇬 狮城节点 | `新加坡\|坡\|狮城\|SG\|Singapore\|SIN` |
+
+**节点名带倍率后缀（`| 0.5x`）不影响匹配**，实测通过。
+
+### 三、`proxy: DIRECT` 为什么必须有
+
+不加的话，拉订阅的请求会被 `MATCH,🐟 漏网之鱼` 兜走 → 走代理 → 但此时节点还没拉到 → **EOF**。
+
+实测日志：
+
+```
+error: initial proxy provider p_http_noua error: Get "http://.../sub": EOF
+warning: [TCP] dial 🐟 漏网之鱼 --> 127.0.0.1:18099
+         error: 192.0.2.11:8388 connect error: connect failed
+```
+
+**36 个 rule-provider 全部加了 `proxy: DIRECT`**（28 个上游 + 8 个自定义）。原来只有 8 个自定义的加了，28 个上游的没加 —— 首次启动节点未就绪时这 28 个会拉失败，等一个 `interval` 才补上。
+
+### 四、UA header 的格式坑
+
+```yaml
+header:
+  User-Agent: "clash-verge/v1.7.0"        # ✗ 'header[User-Agent]' is not a slice
+  User-Agent:
+    - "clash-verge/v1.7.0"                # ✓ 必须是 list
+```
+
+### 五、base64 v2ray 订阅也能用
+
+实测 mihomo **原生支持** v2ray 通用订阅（base64 编码的 `vmess://` / `vless://` / `ss://` / `trojan://`），自动解码，不需要先转成 Clash YAML：
+
+```
+file → Clash YAML          3 个节点 ✓
+file → base64 v2ray        2 个节点 ✓
+http → 机场按 UA 给 YAML    6 个节点 ✓
+```
+
+所以机场后台给什么格式都能直接填。
+
+### 六、OpenClash 会覆写这些
+
+导入后 OpenClash 的「覆写设置」会盖掉 yaml 里的：
+
+```
+mixed-port / allow-lan / bind-address / external-controller / dns / mode
+```
+
+所以 yaml 里这些值写成什么样都不影响，真正生效的是 OpenClash 插件设置页的选项。
+
+**真正从 yaml 生效的是：`proxy-providers` / `proxy-groups` / `rule-providers` / `rules`。**
+
+### 七、你现有三个机场配置
+
+OpenClash 的 `/etc/openclash/config/` 里有 `Rstar TK.yaml` / `ikunn.yaml` / `ikuuu.yaml`（都是停用状态）。
+
+**不要直接把这几个文件塞进 `proxy-provider`** —— 它们是完整配置（含自己的 proxy-groups / rules），虽然 mihomo 只会读 `proxies:` 段不会串味，但路径在 OpenClash 容器外，`type: file` 的 `path` 受 SAFE_PATHS 限制。
+
+正确做法：**去机场后台复制订阅链接**，填到 `airport.url`。
