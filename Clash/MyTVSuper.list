@@ -1,0 +1,39 @@
+# NAME: MyTVSuper
+# myTV SUPER（香港 TVB 的 OTT 平台）—— 全站按 IP 锁区，必须走香港落地
+# 来源: crt.sh 证书透明日志 + DNS 实测 + CNAME 链追踪，逐条验证（2026-11-05）
+#
+# 域名结构实测:
+#   mytvsuper.com / mytvsuper.hk / mytvsuper.com.hk  → 34.98.111.37  (GCP 全球 LB)
+#   api.mytvsuper.com      → CNAME v1.platform.vip.hk4.tvb.com → 202.126.53.9   (TVB 香港机房)
+#   auth.mytvsuper.com     → CNAME w1.auth.vip.hk3.tvb.com     → 202.126.62.41
+#   ad.mytvsuper.com       → CNAME w1.adcentral.vip.hk4.tvb.com → 202.126.53.21
+#   adservice.mytvsuper.com→ CNAME w11.mytvsuper.vip.hk4.tvb.com → 202.126.53.100
+#   media.mytvsuper.com    → 34.49.22.226   (视频 CDN / GCP)
+#   assets.mytvsuper.com   → 107.178.248.124
+#   content-api.mytvsuper.com → 34.149.178.104
+#   mystyle-api.mytvsuper.com → 136.68.58.251  (香港本地 CDN)
+#   member/capi/gapi.mytvsuper.com → 216.239.x.x (Google Frontend)
+#
+# ★ 关键：上面 api / auth / ad 虽然 CNAME 到 *.vip.hk*.tvb.com，
+#   但客户端请求的 Host 仍是 *.mytvsuper.com，SNI 也是 mytvsuper.com，
+#   所以 +.mytvsuper.com 一条通配即全部覆盖，不需要单独收 vip.hk*.tvb.com。
+#
+# ★ 故意不收的:
+#   image.mytvsuper.com / link.mytvsuper.com  → CNAME 到 emarsys.net（营销邮件追踪）
+#   marketing.mytvsuper.com                   → CNAME 到 go.pardot.com（B2B 营销）
+#   这三条是邮件里的追踪链接，走代理没意义，还可能连累邮件客户端。
+#
+# ★ tvb.com / tvb.com.hk / tvbanywhere.com 一并收:
+#   tvb.com          34.117.137.152  TVB 官网 + 节目表，myTV SUPER 账号互通
+#   tvb.com.hk       202.126.48.18   TVB 香港站
+#   tvbanywhere.com  104.21.94.16    TVB Anywhere（海外版，同一账号体系）
+#   如果只想代理 myTV SUPER 本体，删掉最后 3 条即可。
+
+# DOMAIN-SUFFIX: 6
+# TOTAL: 6
+DOMAIN-SUFFIX,mytvsuper.com
+DOMAIN-SUFFIX,mytvsuper.hk
+DOMAIN-SUFFIX,mytvsuper.com.hk
+DOMAIN-SUFFIX,tvbanywhere.com
+DOMAIN-SUFFIX,tvb.com
+DOMAIN-SUFFIX,tvb.com.hk

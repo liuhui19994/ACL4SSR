@@ -25,6 +25,7 @@
 | `AI-All.list` | 213 | ChatGPT / Claude / Grok / Perplexity / Copilot 等全量 |
 | `Meta.list` | 24 | Facebook / Instagram / Messenger / Threads / WhatsApp / Meta AI / Muse AI |
 | `TaiwanMedia.list` | 15 | 台湾流媒体全集：LiTV / 4GTV / OFiii / 巴哈姆特 / Hami Video / KKTV / friDay / LINE TV / myVideo / CatchPlay |
+| `MyTVSuper.list` | 6 | 香港 myTV SUPER 全集：mytvsuper.com/.hk/.com.hk + tvbanywhere + tvb.com + tvb.com.hk |
 
 > `Gemini-Full.list` 取代上游 `Gemini.list`（13 条，2025-06 停更）。
 > `Google.list` 合并取代上游 `PlayStore.list`（6 条）+ 原 `X.list` + 原 `GooglePlay-Full.list`。
@@ -40,14 +41,30 @@
 
 | 项目 | 原有 | 变动 | 现在 |
 |---|---:|---|---:|
-| 策略组 | 27 | +4（🎵 TikTok / Google / 📱 Meta / 📺 台湾媒体）<br>-8（奈飞 / 哔哩哔哩 / 微软×3 / 游戏平台 / 网易音乐 / 巴哈姆特） | **23** |
-| rule-provider | 41 | +8 / -13 | **36** |
-| 规则 | 43 | +8 / -13 | **38** |
+| 策略组 | 27 | +6（🎵 TikTok / Google / 📱 Meta / 📺 台湾媒体 / 📺 香港媒体 / 恢复 8 组后净增） | **32** |
+| rule-provider | 41 | +9 | **50** |
+| 规则 | 43 | +9 | **52** |
+
+**2026-11-05 起分组恢复默认**：之前删掉的 8 组（🎥 奈飞视频 / 📺 巴哈姆特 / 📺 哔哩哔哩 / Ⓜ️ 微软Bing / Ⓜ️ 微软云盘 / Ⓜ️ 微软服务 / 🎮 游戏平台 / 🎶 网易音乐）连同 13 个 provider 和 13 条规则全部恢复，只在默认之上保留 5 个自定义组：
+
+- `🎵 TikTok` / `Google` / `📱 Meta` —— 合并 X + Play 后的 Google 系列
+- `📺 台湾媒体` / `📺 香港媒体` —— 港澳台流媒体按 IP 锁区，必须分开落地
+
+完整组序（32 组）：
+
+```
+🚀 节点选择 / ☑️ 手动切换 / ♻️ 自动选择 / 📲 电报消息
+🤖 OpenAi / 📱 Meta / 🎵 TikTok / Google
+📹 油管视频 / 🎥 奈飞视频 / 📺 巴哈姆特 / 📺 哔哩哔哩 / 📺 台湾媒体 / 📺 香港媒体
+🌍 国外媒体 / 🌏 国内媒体 / 📢 谷歌FCM
+Ⓜ️ 微软Bing / Ⓜ️ 微软云盘 / Ⓜ️ 微软服务 / 🍎 苹果服务 / 🎮 游戏平台 / 🎶 网易音乐
+🎯 全球直连 / 🛑 广告拦截 / 🍃 应用净化 / 🐟 漏网之鱼
+🇭🇰 香港节点 / 🇯🇵 日本节点 / 🇺🇲 美国节点 / 🇹🇼 台湾节点 / 🇸🇬 狮城节点
+```
 
 - `🤖 OpenAi` 组复用，Muse / Gemini / AI-All 三条规则都指向它
-- `📢 谷歌FCM` 组复用，只换用 12 条完整版 provider（原 `googlefcm_6` 只有部分节点）
-- 新增的 8 条规则**放在 rules 最前面**，先于 `playstore_0`，否则 Play 会被老规则抢走
-- 已删除的 8 个组连同它们的 13 个 provider 和 13 条规则一起移除，无悬空引用
+- `📢 谷歌FCM` 组复用，只换用 17 条完整版 provider（原 `googlefcm_6` 只有部分节点）
+- 自定义的 9 条规则**放在 rules 最前面**，先于 `playstore_0`，否则 Play 会被老规则抢走
 - `proxies:` 是 9 条占位节点，**name 与你原配置完全一致**（`🇭🇰 HK- DMIT` / `🇯🇵 JP-Vultr` 等），
   只改 `server` / `port` / 认证字段即可，别改 name——6 个地区 `load-balance` 组靠它解析
 
@@ -116,7 +133,12 @@ provider 拉取走的是 mihomo 自己的规则匹配。如果代理组当时不
 
 **6. Play 和 FCM 必须分开。** FCM 是常驻长连接，Play 是突发大流量，混一组会让推送被下载挤掉线。
 
-**7. 台湾流媒体只能走台湾落地。** LiTV / 4GTV / OFiii 都按 IP 锁区，走非台湾节点会直接拒绝播放。`📺 台湾媒体` 组的默认第一项是 `🚀 节点选择`，用之前记得切到 `🇹🇼 台湾节点`。
+**7. 港澳台流媒体只能走本地落地。**
+
+- 台湾：LiTV / 4GTV / OFiii 按 IP 锁区，走非台湾节点直接拒绝播放 → 切 `🇹🇼 台湾节点`
+- 香港：myTV SUPER 全站锁区，且 `api/auth/ad.mytvsuper.com` 直接 CNAME 到 TVB 香港机房（`*.vip.hk4.tvb.com`，202.126.53.x），走非香港节点连登录都过不去 → 切 `🇭🇰 香港节点`
+
+两个组的默认第一项都是 `🚀 节点选择`，用之前记得手动切。
 
 **8. OFiii 后端就是 LiTV。** `ofiii.com` 页面里 `p-cdnstatic.svc.litv.tv` 出现 75 次，API 在 `fino.svc.litv.tv`。所以 `+.litv.tv` 一条通配同时覆盖了 OFiii 的 CDN 和 API，不必单独列。
 
@@ -442,6 +464,7 @@ rules:
   - RULE-SET,google,Google          ← pa 通配兜底
   - RULE-SET,meta,📱 Meta
   - RULE-SET,taiwan_media,📺 台湾媒体
+  - RULE-SET,mytvsuper,📺 香港媒体
 ```
 
 这样：AI 具名条目先命中 → 剩下的 `*-pa` 落到 Google 组 → 未来 Google 新增的 `-pa` 域名自动覆盖，不会再有漏网。
@@ -539,8 +562,11 @@ SHA=$(git rev-parse HEAD)
 | `google_fcm` | `Clash/domain/GoogleFCM.yaml` |
 | `ai_all` | `Clash/domain/AI-All.yaml` |
 | `taiwan_media` | `Clash/domain/TaiwanMedia.yaml` |
+| `mytvsuper` | `Clash/domain/MyTVSuper.yaml` |
 
 另外 28 个 provider 仍指向 `cmliu/ACL4SSR` 上游（`@main` 和 `@433381eb` 两种），**没动**。
+
+2026-11-05 恢复的 13 个 provider（`bing_9` / `onedrive_10` / `microsoft_11` / `neteasemusic_19` / `epic_20` / `origin_21` / `sony_22` / `steam_23` / `nintendo_24` / `netflix_26` / `bahamut_27` / `bilibilihmt_28` / `bilibili_29`）全部指向 `ACL4SSR/ACL4SSR@433381eb` 的 `Clash/Providers/Ruleset/*.yaml`，`behavior: classical`。
 
 ---
 

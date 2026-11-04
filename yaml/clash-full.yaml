@@ -99,6 +99,19 @@ proxy-groups:
       - 🇺🇲 美国节点
       - ☑️ 手动切换
       - DIRECT
+  - name: 📱 Meta
+    type: select
+    proxies:
+      - 🤖 OpenAi
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇺🇲 美国节点
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - ☑️ 手动切换
+      - DIRECT
   - name: 🎵 TikTok
     type: select
     proxies:
@@ -123,20 +136,43 @@ proxy-groups:
       - 🇹🇼 台湾节点
       - ☑️ 手动切换
       - DIRECT
-  - name: 📱 Meta
+  - name: 📹 油管视频
     type: select
     proxies:
-      - 🤖 OpenAi
       - 🚀 节点选择
       - ♻️ 自动选择
-      - 🇺🇲 美国节点
       - 🇸🇬 狮城节点
       - 🇭🇰 香港节点
       - 🇹🇼 台湾节点
       - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
       - ☑️ 手动切换
       - DIRECT
-  - name: 📹 油管视频
+  - name: 🎥 奈飞视频
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - ☑️ 手动切换
+      - DIRECT
+  - name: 📺 巴哈姆特
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - ☑️ 手动切换
+      - DIRECT
+  - name: 📺 哔哩哔哩
     type: select
     proxies:
       - 🚀 节点选择
@@ -156,6 +192,18 @@ proxy-groups:
       - 🇹🇼 台湾节点
       - 🇭🇰 香港节点
       - 🇸🇬 狮城节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - ☑️ 手动切换
+      - DIRECT
+  - name: 📺 香港媒体
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
       - 🇯🇵 日本节点
       - 🇺🇲 美国节点
       - ☑️ 手动切换
@@ -193,6 +241,42 @@ proxy-groups:
       - 🇸🇬 狮城节点
       - 🇯🇵 日本节点
       - ☑️ 手动切换
+  - name: Ⓜ️ 微软Bing
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - ☑️ 手动切换
+      - DIRECT
+  - name: Ⓜ️ 微软云盘
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - ☑️ 手动切换
+      - DIRECT
+  - name: Ⓜ️ 微软服务
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - ☑️ 手动切换
+      - DIRECT
   - name: 🍎 苹果服务
     type: select
     proxies:
@@ -204,6 +288,30 @@ proxy-groups:
       - 🇸🇬 狮城节点
       - 🇯🇵 日本节点
       - ☑️ 手动切换
+  - name: 🎮 游戏平台
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - ☑️ 手动切换
+      - DIRECT
+  - name: 🎶 网易音乐
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - ☑️ 手动切换
+      - DIRECT
   - name: 🎯 全球直连
     type: select
     proxies:
@@ -276,7 +384,6 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-
 rule-providers:
   playstore_0:
     type: http
@@ -347,6 +454,27 @@ rule-providers:
     path: ./ruleset/steamcn_8.yaml
     interval: 86400
     proxy: DIRECT
+  bing_9:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Bing.yaml
+    path: ./ruleset/bing_9.yaml
+    interval: 86400
+    proxy: DIRECT
+  onedrive_10:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/OneDrive.yaml
+    path: ./ruleset/onedrive_10.yaml
+    interval: 86400
+    proxy: DIRECT
+  microsoft_11:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Microsoft.yaml
+    path: ./ruleset/microsoft_11.yaml
+    interval: 86400
+    proxy: DIRECT
   apple_12:
     type: http
     behavior: classical
@@ -400,11 +528,81 @@ rule-providers:
     interval: 86400
     format: text
     proxy: DIRECT
+  neteasemusic_19:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/NetEaseMusic.yaml
+    path: ./ruleset/neteasemusic_19.yaml
+    interval: 86400
+    proxy: DIRECT
+  epic_20:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Epic.yaml
+    path: ./ruleset/epic_20.yaml
+    interval: 86400
+    proxy: DIRECT
+  origin_21:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Origin.yaml
+    path: ./ruleset/origin_21.yaml
+    interval: 86400
+    proxy: DIRECT
+  sony_22:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Sony.yaml
+    path: ./ruleset/sony_22.yaml
+    interval: 86400
+    proxy: DIRECT
+  steam_23:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Steam.yaml
+    path: ./ruleset/steam_23.yaml
+    interval: 86400
+    proxy: DIRECT
+  nintendo_24:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Nintendo.yaml
+    path: ./ruleset/nintendo_24.yaml
+    interval: 86400
+    proxy: DIRECT
   youtube_25:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/YouTube.yaml
     path: ./ruleset/youtube_25.yaml
+    interval: 86400
+    proxy: DIRECT
+  netflix_26:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Netflix.yaml
+    path: ./ruleset/netflix_26.yaml
+    interval: 86400
+    proxy: DIRECT
+  bahamut_27:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Bahamut.yaml
+    path: ./ruleset/bahamut_27.yaml
+    interval: 86400
+    proxy: DIRECT
+  bilibilihmt_28:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/BilibiliHMT.yaml
+    path: ./ruleset/bilibilihmt_28.yaml
+    interval: 86400
+    proxy: DIRECT
+  bilibili_29:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/433381ebc4b1de59350fa8bed2a04a888228f801/Clash/Providers/Ruleset/Bilibili.yaml
+    path: ./ruleset/bilibili_29.yaml
     interval: 86400
     proxy: DIRECT
   chinamedia_30:
@@ -493,73 +691,79 @@ rule-providers:
     interval: 86400
     format: text
     proxy: DIRECT
+  google_fcm:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/GoogleFCM.yaml
+    path: ./ruleset/google_fcm_v3.yaml
+    interval: 3600
+    proxy: DIRECT
   tiktok:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/TikTok.yaml"
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/TikTok.yaml
     path: ./ruleset/tiktok_v3.yaml
+    interval: 3600
+    proxy: DIRECT
+  gemini:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Gemini-Full.yaml
+    path: ./ruleset/gemini_v3.yaml
+    interval: 3600
+    proxy: DIRECT
+  ai_all:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/AI-All.yaml
+    path: ./ruleset/ai_all_v3.yaml
+    interval: 3600
+    proxy: DIRECT
+  muse:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Muse.yaml
+    path: ./ruleset/muse_v3.yaml
     interval: 3600
     proxy: DIRECT
   google:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Google.yaml"
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Google.yaml
     path: ./ruleset/google_v3.yaml
     interval: 3600
     proxy: DIRECT
   meta:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Meta.yaml"
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Meta.yaml
     path: ./ruleset/meta_v3.yaml
-    interval: 3600
-    proxy: DIRECT
-  muse:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Muse.yaml"
-    path: ./ruleset/muse_v3.yaml
-    interval: 3600
-    proxy: DIRECT
-  gemini:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/Gemini-Full.yaml"
-    path: ./ruleset/gemini_v3.yaml
-    interval: 3600
-    proxy: DIRECT
-  google_fcm:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/GoogleFCM.yaml"
-    path: ./ruleset/google_fcm_v3.yaml
-    interval: 3600
-    proxy: DIRECT
-  ai_all:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/AI-All.yaml"
-    path: ./ruleset/ai_all_v3.yaml
     interval: 3600
     proxy: DIRECT
   taiwan_media:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/TaiwanMedia.yaml"
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/2d6961b7aeef87bfae90e437a5e4a801866a726f/Clash/domain/TaiwanMedia.yaml
     path: ./ruleset/taiwan_media_v3.yaml
     interval: 3600
     proxy: DIRECT
+  mytvsuper:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/MyTVSuper.yaml
+    path: ./ruleset/mytvsuper.yaml
+    interval: 86400
+    proxy: DIRECT
 rules:
-  # ---- 精确匹配优先：FCM 推送 / TikTok / AI 具名域名 ----
   - RULE-SET,google_fcm,📢 谷歌FCM
   - RULE-SET,tiktok,🎵 TikTok
   - RULE-SET,gemini,🤖 OpenAi
   - RULE-SET,ai_all,🤖 OpenAi
   - RULE-SET,muse,🤖 OpenAi
-  # ---- Google 组：含 pa.googleapis.com 通配，必须排在 AI 具名之后 ----
   - RULE-SET,google,Google
   - RULE-SET,meta,📱 Meta
   - RULE-SET,taiwan_media,📺 台湾媒体
+  - RULE-SET,mytvsuper,📺 香港媒体
   - RULE-SET,playstore_0,🚀 节点选择
   - RULE-SET,cfnat_1,🎯 全球直连
   - RULE-SET,localareanetwork_2,🎯 全球直连
@@ -569,6 +773,9 @@ rules:
   - RULE-SET,googlefcm_6,📢 谷歌FCM
   - RULE-SET,googlecn_7,🚀 节点选择
   - RULE-SET,steamcn_8,🎯 全球直连
+  - RULE-SET,bing_9,Ⓜ️ 微软Bing
+  - RULE-SET,onedrive_10,Ⓜ️ 微软云盘
+  - RULE-SET,microsoft_11,Ⓜ️ 微软服务
   - RULE-SET,apple_12,🍎 苹果服务
   - RULE-SET,telegram_13,📲 电报消息
   - RULE-SET,openai_14,🤖 OpenAi
@@ -576,7 +783,17 @@ rules:
   - RULE-SET,copilot_16,🤖 OpenAi
   - RULE-SET,githubcopilot_17,🤖 OpenAi
   - RULE-SET,claude_18,🤖 OpenAi
+  - RULE-SET,neteasemusic_19,🎶 网易音乐
+  - RULE-SET,epic_20,🎮 游戏平台
+  - RULE-SET,origin_21,🎮 游戏平台
+  - RULE-SET,sony_22,🎮 游戏平台
+  - RULE-SET,steam_23,🎮 游戏平台
+  - RULE-SET,nintendo_24,🎮 游戏平台
   - RULE-SET,youtube_25,📹 油管视频
+  - RULE-SET,netflix_26,🎥 奈飞视频
+  - RULE-SET,bahamut_27,📺 巴哈姆特
+  - RULE-SET,bilibilihmt_28,📺 哔哩哔哩
+  - RULE-SET,bilibili_29,📺 哔哩哔哩
   - RULE-SET,chinamedia_30,🌏 国内媒体
   - RULE-SET,proxymedia_31,🌍 国外媒体
   - RULE-SET,emby_32,🌍 国外媒体
