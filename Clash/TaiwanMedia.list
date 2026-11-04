@@ -1,0 +1,12 @@
+# NAME: TaiwanMedia
+# 台湾流媒体：LiTV / 4GTV / OFiii
+# 来源: DNS 实测 + 证书 SAN 核验 + blackmatrix7 (LiTV)
+# 注意: OFiii 后端由 LiTV 提供（页面引用 p-cdnstatic.svc.litv.tv / fino.svc.litv.tv）
+#       litv.tv 通配已覆盖这两条，无需单列
+# DOMAIN-SUFFIX: 5
+# TOTAL: 5
+DOMAIN-SUFFIX,litv.tv
+DOMAIN-SUFFIX,litvfreemobile-hichannel.cdn.hinet.net
+DOMAIN-SUFFIX,4gtv.tv
+DOMAIN-SUFFIX,ofiii.com
+DOMAIN-SUFFIX,ofiii.tv

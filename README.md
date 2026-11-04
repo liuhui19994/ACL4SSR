@@ -23,6 +23,7 @@
 | `GooglePlay-Full.list` | 21 | Play API + 图片 + **APK 下载 CDN gvt1/2/3** + 设备注册 |
 | `GoogleFCM.list` | 12 | FCM 推送全部 mtalk 节点 |
 | `AI-All.list` | 213 | ChatGPT / Claude / Grok / Perplexity / Copilot 等全量 |
+| `TaiwanMedia.list` | 5 | LiTV / 4GTV / OFiii（台湾流媒体） |
 
 > `Gemini-Full.list` 取代上游 `Gemini.list`（13 条，2025-06 停更）。
 > `GooglePlay-Full.list` 取代上游 `PlayStore.list`（6 条）。
@@ -36,15 +37,16 @@
 
 **在你现有 misub 配置上做加法，不是另起一套。** 分组、规则顺序、DNS 全部沿用你原来那份：
 
-| 项目 | 原有 | 新增 | 合计 |
-|---|---:|---:|---:|
-| 策略组 | 27 | 3（🎵 TikTok / 🐦 推特X / ▶️ 谷歌商店） | **30** |
-| rule-provider | 41 | 7 | **48** |
-| 规则 | 43 | 7 | **50** |
+| 项目 | 原有 | 变动 | 现在 |
+|---|---:|---|---:|
+| 策略组 | 27 | +4（🎵 TikTok / 🐦 推特X / ▶️ 谷歌商店 / 📺 台湾媒体）<br>-8（奈飞 / 哔哩哔哩 / 微软×3 / 游戏平台 / 网易音乐 / 巴哈姆特） | **23** |
+| rule-provider | 41 | +8 / -13 | **36** |
+| 规则 | 43 | +8 / -13 | **38** |
 
 - `🤖 OpenAi` 组复用，Muse / Gemini / AI-All 三条规则都指向它
 - `📢 谷歌FCM` 组复用，只换用 12 条完整版 provider（原 `googlefcm_6` 只有部分节点）
-- 新增的 7 条规则**放在 rules 最前面**，先于 `playstore_0`，否则 Play 会被老规则抢走
+- 新增的 8 条规则**放在 rules 最前面**，先于 `playstore_0`，否则 Play 会被老规则抢走
+- 已删除的 8 个组连同它们的 13 个 provider 和 13 条规则一起移除，无悬空引用
 - `proxies:` 是 9 条占位节点，**name 与你原配置完全一致**（`🇭🇰 HK- DMIT` / `🇯🇵 JP-Vultr` 等），
   只改 `server` / `port` / 认证字段即可，别改 name——6 个地区 `load-balance` 组靠它解析
 
@@ -113,7 +115,11 @@ provider 拉取走的是 mihomo 自己的规则匹配。如果代理组当时不
 
 **6. Play 和 FCM 必须分开。** FCM 是常驻长连接，Play 是突发大流量，混一组会让推送被下载挤掉线。
 
-**7. Play 更新吃流量。** `gvt1/2/3` 全走代理的话，小流量套餐会被应用更新吃掉大半。
+**7. 台湾流媒体只能走台湾落地。** LiTV / 4GTV / OFiii 都按 IP 锁区，走非台湾节点会直接拒绝播放。`📺 台湾媒体` 组的默认第一项是 `🚀 节点选择`，用之前记得切到 `🇹🇼 台湾节点`。
+
+**8. OFiii 后端就是 LiTV。** `ofiii.com` 页面里 `p-cdnstatic.svc.litv.tv` 出现 75 次，API 在 `fino.svc.litv.tv`。所以 `+.litv.tv` 一条通配同时覆盖了 OFiii 的 CDN 和 API，不必单独列。
+
+**9. Play 更新吃流量。** `gvt1/2/3` 全走代理的话，小流量套餐会被应用更新吃掉大半。
 
 ---
 
