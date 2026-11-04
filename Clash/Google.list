@@ -1,76 +1,41 @@
 # NAME: Google
-# Google 全家桶 + X (Twitter)
-# 合并自原 ▶️ 谷歌商店 / 🐦 推特X 两组，另补账号、登录、Gmail 邮箱
-# 来源: dns.google 实测 50/50 存活（2026-11-04）
-#
-# 为什么 X 并进来：X 支持 Google 账号登录，OAuth 会跳 accounts.google.com，
-#   分组不一致时登录页走 A 节点、回跳走 B 节点，X 会判定异地登录要手机验证。
-#
-# 本组【不含】以下域名，它们由前面的规则优先命中：
-#   FCM      fcm.googleapis.com / firebaseinstallations / mtalk.google.com  -> 谷歌FCM
-#   Gemini   gemini.google.com / bard.google.com / aistudio.google.com      -> OpenAi
-#   YouTube  youtube.com / ytimg.com / googlevideo.com                      -> 油管视频
-#   广告     doubleclick / googleadservices / google-analytics              -> 广告拦截
-#
-# 未收 googleusercontent.com 整域 —— 会连带吞掉 blogger / googleapis 静态等，
-#   只按用途收 mail. / play-lh. / play-games. 三个子域。
-# TOTAL: 99
+# Google 账号/登录 + Gmail + Play 商店 + X (Twitter)
+# pa.googleapis.com 通配兜底所有 xxx-pa.googleapis.com（accounts-pa / mail-pa / drive-pa ...）
+# AI 相关的 -pa 具名条目在 gemini / ai_all 里，规则顺序在 google 之前
 
-# ---- Google 账号 / 登录 / 身份（OAuth 回跳靠这个） ----
-DOMAIN-SUFFIX,accounts.google.com
-DOMAIN-SUFFIX,accounts.youtube.com
-DOMAIN-SUFFIX,myaccount.google.com
-DOMAIN-SUFFIX,myactivity.google.com
+# TOTAL: 100
+
 DOMAIN-SUFFIX,account.google.com
-DOMAIN-SUFFIX,oauth2.googleapis.com
-DOMAIN-SUFFIX,oauthaccountmanager.googleapis.com
-DOMAIN-SUFFIX,securetoken.googleapis.com
-DOMAIN-SUFFIX,identitytoolkit.googleapis.com
-DOMAIN-SUFFIX,apis.google.com
-DOMAIN-SUFFIX,www.googleapis.com
-DOMAIN-SUFFIX,android.googleapis.com
-DOMAIN-SUFFIX,people.googleapis.com
-DOMAIN-SUFFIX,contacts.google.com
-DOMAIN-SUFFIX,accounts.google.co.uk
 DOMAIN-SUFFIX,accounts.google.co.jp
-DOMAIN-SUFFIX,accounts.google.com.hk
-DOMAIN-SUFFIX,accounts.google.com.tw
-DOMAIN-SUFFIX,accounts.google.com.au
-DOMAIN-SUFFIX,accounts.google.com.sg
-DOMAIN-SUFFIX,accounts.google.de
 DOMAIN-SUFFIX,accounts.google.co.kr
-DOMAIN-SUFFIX,passwords.google.com
-DOMAIN-SUFFIX,one.google.com
-DOMAIN-SUFFIX,pay.google.com
-DOMAIN-SUFFIX,takeout.google.com
-
-# ---- Gmail / 邮箱 ----
-DOMAIN-SUFFIX,gmail.com
-DOMAIN-SUFFIX,mail.google.com
-DOMAIN-SUFFIX,inbox.google.com
-DOMAIN-SUFFIX,googlemail.com
-DOMAIN-SUFFIX,m.gmail.com
-DOMAIN-SUFFIX,mail.googleusercontent.com
-
-# ---- Google 云服务 ----
-DOMAIN-SUFFIX,calendar.google.com
-DOMAIN-SUFFIX,drive.google.com
-DOMAIN-SUFFIX,photos.google.com
-DOMAIN-SUFFIX,keep.google.com
-DOMAIN-SUFFIX,meet.google.com
-DOMAIN-SUFFIX,chat.google.com
-DOMAIN-SUFFIX,maps.google.com
-DOMAIN-SUFFIX,translate.googleapis.com
-DOMAIN-SUFFIX,store.google.com
-DOMAIN-SUFFIX,voice.google.com
-DOMAIN-SUFFIX,notification.google.com
-
-# ---- Google Play 商店 ----
+DOMAIN-SUFFIX,accounts.google.co.uk
+DOMAIN-SUFFIX,accounts.google.com
+DOMAIN-SUFFIX,accounts.google.com.au
+DOMAIN-SUFFIX,accounts.google.com.hk
+DOMAIN-SUFFIX,accounts.google.com.sg
+DOMAIN-SUFFIX,accounts.google.com.tw
+DOMAIN-SUFFIX,accounts.google.de
+DOMAIN-SUFFIX,accounts.youtube.com
+DOMAIN-SUFFIX,ads-twitter.com
 DOMAIN-SUFFIX,android.clients.google.com
 DOMAIN-SUFFIX,android.com
+DOMAIN-SUFFIX,android.googleapis.com
+DOMAIN-SUFFIX,api.x.com
+DOMAIN-SUFFIX,apis.google.com
+DOMAIN-SUFFIX,calendar.google.com
+DOMAIN-SUFFIX,chat.google.com
+DOMAIN-SUFFIX,cms-twdigitalassets.com
+DOMAIN-SUFFIX,contacts.google.com
 DOMAIN-SUFFIX,dl.google.com
+DOMAIN-SUFFIX,drive.google.com
+DOMAIN-SUFFIX,g.co
 DOMAIN-SUFFIX,ggpht.com
+DOMAIN-SUFFIX,gmail.com
+DOMAIN-SUFFIX,goo.gl
+DOMAIN-SUFFIX,googlemail.com
 DOMAIN-SUFFIX,googleplay.com
+DOMAIN-SUFFIX,grok.com
+DOMAIN-SUFFIX,gstatic.com
 DOMAIN-SUFFIX,gvt0.com
 DOMAIN-SUFFIX,gvt1.com
 DOMAIN-SUFFIX,gvt2.com
@@ -79,33 +44,42 @@ DOMAIN-SUFFIX,gvt5.com
 DOMAIN-SUFFIX,gvt6.com
 DOMAIN-SUFFIX,gvt7.com
 DOMAIN-SUFFIX,gvt9.com
+DOMAIN-SUFFIX,identitytoolkit.googleapis.com
+DOMAIN-SUFFIX,inbox.google.com
+DOMAIN-SUFFIX,keep.google.com
+DOMAIN-SUFFIX,m.gmail.com
+DOMAIN-SUFFIX,mail.google.com
+DOMAIN-SUFFIX,mail.googleusercontent.com
+DOMAIN-SUFFIX,maps.google.com
+DOMAIN-SUFFIX,meet.google.com
+DOMAIN-SUFFIX,myaccount.google.com
+DOMAIN-SUFFIX,myactivity.google.com
+DOMAIN-SUFFIX,notification.google.com
+DOMAIN-SUFFIX,oauth2.googleapis.com
+DOMAIN-SUFFIX,oauthaccountmanager.googleapis.com
+DOMAIN-SUFFIX,one.google.com
+DOMAIN-SUFFIX,pa.googleapis.com
+DOMAIN-SUFFIX,passwords.google.com
+DOMAIN-SUFFIX,pay.google.com
+DOMAIN-SUFFIX,people.googleapis.com
+DOMAIN-SUFFIX,periscope.tv
+DOMAIN-SUFFIX,photos.google.com
 DOMAIN-SUFFIX,play-fe.googleapis.com
 DOMAIN-SUFFIX,play-games.googleusercontent.com
 DOMAIN-SUFFIX,play-lh.googleusercontent.com
 DOMAIN-SUFFIX,play.google.com
 DOMAIN-SUFFIX,play.googleapis.com
+DOMAIN-SUFFIX,pscp.tv
 DOMAIN-SUFFIX,redirector.c.play.google.com
 DOMAIN-SUFFIX,redirector.gvt1.com
+DOMAIN-SUFFIX,securetoken.googleapis.com
 DOMAIN-SUFFIX,services.googleapis.cn
-DOMAIN-SUFFIX,xn--ngstr-lra8j.com
-
-# ---- Google 静态 / CDN / 短链 ----
-DOMAIN-SUFFIX,gstatic.com
 DOMAIN-SUFFIX,ssl.gstatic.com
-DOMAIN-SUFFIX,www.gstatic.com
-DOMAIN-SUFFIX,g.co
-DOMAIN-SUFFIX,goo.gl
-DOMAIN-SUFFIX,withgoogle.com
-
-# ---- X / Twitter ----
-DOMAIN-SUFFIX,ads-twitter.com
-DOMAIN-SUFFIX,api.x.com
-DOMAIN-SUFFIX,cms-twdigitalassets.com
-DOMAIN-SUFFIX,grok.com
-DOMAIN-SUFFIX,periscope.tv
-DOMAIN-SUFFIX,pscp.tv
+DOMAIN-SUFFIX,store.google.com
 DOMAIN-SUFFIX,t.co
+DOMAIN-SUFFIX,takeout.google.com
 DOMAIN-SUFFIX,tellapart.com
+DOMAIN-SUFFIX,translate.googleapis.com
 DOMAIN-SUFFIX,tweetdeck.com
 DOMAIN-SUFFIX,twimg.co
 DOMAIN-SUFFIX,twimg.com
@@ -125,4 +99,9 @@ DOMAIN-SUFFIX,twttr.com
 DOMAIN-SUFFIX,twttr.net
 DOMAIN-SUFFIX,twvid.com
 DOMAIN-SUFFIX,vine.co
+DOMAIN-SUFFIX,voice.google.com
+DOMAIN-SUFFIX,withgoogle.com
+DOMAIN-SUFFIX,www.googleapis.com
+DOMAIN-SUFFIX,www.gstatic.com
 DOMAIN-SUFFIX,x.com
+DOMAIN-SUFFIX,xn--ngstr-lra8j.com

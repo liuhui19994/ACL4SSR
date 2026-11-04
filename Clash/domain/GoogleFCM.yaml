@@ -1,18 +1,18 @@
-# Google FCM 推送（mtalk）
-# 
-# 生成: 2026-11-04 21:05:19 (UTC+8)   条数: 12
-# 源: MetaCubeX/meta-rules-dat geosite
-# 用法: rule-providers -> behavior: domain, format: yaml
 payload:
-  - 'alt7-mtalk.google.com'
-  - 'alt8-mtalk.google.com'
-  - 'mtalk-dev.google.com'
-  - 'mtalk-staging.google.com'
-  - 'mtalk4.google.com'
-  - 'alt1-mtalk.google.com'
-  - 'alt2-mtalk.google.com'
-  - 'alt3-mtalk.google.com'
-  - 'alt4-mtalk.google.com'
-  - 'alt5-mtalk.google.com'
-  - 'alt6-mtalk.google.com'
-  - 'mtalk.google.com'
+  - '+.alt1-mtalk.google.com'
+  - '+.alt2-mtalk.google.com'
+  - '+.alt3-mtalk.google.com'
+  - '+.alt4-mtalk.google.com'
+  - '+.alt5-mtalk.google.com'
+  - '+.alt6-mtalk.google.com'
+  - '+.alt7-mtalk.google.com'
+  - '+.alt8-mtalk.google.com'
+  - '+.mtalk-dev.google.com'
+  - '+.mtalk-staging.google.com'
+  - '+.mtalk.google.com'
+  - '+.mtalk4.google.com'
+  - '+.cloudmessaging-pa.googleapis.com'
+  - '+.fcm.googleapis.com'
+  - '+.firebaseinstallations-pa.googleapis.com'
+  - '+.firebaseinstallations.googleapis.cn'
+  - '+.firebaseinstallations.googleapis.com'

@@ -21,7 +21,7 @@
 | `Muse.list` | 4 | `*.muse.ai` 全子域 + `meta.ai` |
 | `Gemini-Full.list` | 49 | Gemini 网页 + App 私有端点 + NotebookLM + AI Studio |
 | `GooglePlay-Full.list` | 22 | Play API + 图片 + **APK 下载 CDN gvt1/2/3** + 设备注册 |
-| `GoogleFCM.list` | 12 | FCM 推送全部 mtalk 节点 |
+| `GoogleFCM.list` | 17 | FCM 推送全部 mtalk 节点 |
 | `AI-All.list` | 213 | ChatGPT / Claude / Grok / Perplexity / Copilot 等全量 |
 | `Meta.list` | 24 | Facebook / Instagram / Messenger / Threads / WhatsApp / Meta AI / Muse AI |
 | `TaiwanMedia.list` | 15 | 台湾流媒体全集：LiTV / 4GTV / OFiii / 巴哈姆特 / Hami Video / KKTV / friDay / LINE TV / myVideo / CatchPlay |
@@ -385,3 +385,92 @@ X 对机房 IP 的风控比 Google 更狠。合并后 X 和 Google 账号共用�
 - 出口被 X 标记 → Google 登录也受影响
 
 如果以后发现 X 频繁要手机验证，把 `Google` 组切到 `☑️ 手动切换` 里一个家宽/原生 IP 节点，别用机房 IP。
+
+---
+
+## 🤖 Gemini app 只命中一条 —— 根因与修法
+
+### 现象
+
+OpenClash 连接列表里，Gemini app 的请求：
+
+```
+growth-pa.googleapis.com:443           → proxygfwlist_33   ❌
+notifications-pa.googleapis.com:443    → proxygfwlist_33   ❌
+signaler-pa.googleapis.com:443         → proxygfwlist_33   ❌
+robinfrontend-pa.googleapis.com:443    → gemini            ✅ 只有这一条
+```
+
+### 根因
+
+`pa.googleapis.com` 是 Google 的 **Private Access** 域名族，几乎所有 Google 服务都在这个后缀下：
+
+```
+accounts-pa    oauth2-pa      mail-pa        gmail-pa
+drive-pa       photos-pa      calendar-pa    people-pa
+playstore-pa   cloudmessaging-pa   firebaseinstallations-pa
+growth-pa      notifications-pa    signaler-pa
+feedback-pa    semanticlocation-pa
+alkalicore-pa  alkalimakersuite-pa  aisandbox-pa  geller-pa
+robinfrontend-pa  proactivebackend-pa  notebooklm-pa  antigravity-pa
+```
+
+原来的 `Gemini-Full.list` 是**逐个具名**列的（49 条），只收了 AI 相关的十几个，`growth-pa` / `notifications-pa` / `signaler-pa` 三个漏了，于是落到第 29 位的 `proxygfwlist_33`。
+
+### 修法：三层归属 + 调整规则顺序
+
+**`pa.googleapis.com` 本身是空 zone**（没有 A 记录），但所有 `*.pa.googleapis.com` 都有。所以用 `DOMAIN-SUFFIX,pa.googleapis.com` 通配可以兜住全部，不用一个个列。
+
+但通配会把 Gmail / Drive / Play 也拉进 Gemini 组，所以必须**按归属拆开 + 靠规则顺序控制**：
+
+| 归属组 | 收什么 | 规则位置 |
+|---|---|---|
+| 📢 谷歌FCM | `fcm.googleapis.com`、`cloudmessaging-pa`、`firebaseinstallations(-pa)` | **第 1 位** |
+| 🤖 OpenAi（gemini） | `growth-pa`、`notifications-pa`、`signaler-pa`、`feedback-pa`、`semanticlocation-pa`、`alkali*-pa` + 原 49 条具名 | **第 3 位** |
+| 🤖 OpenAi（ai_all） | `appsgenaiserver-pa`、`cloudcode-pa`、`notebooklm-pa`、`antigravity-pa`、`geller-pa` … | **第 4 位** |
+| Google | `pa.googleapis.com` 通配兜底（`accounts-pa` / `mail-pa` / `drive-pa` / `playstore-pa` …） | **第 6 位** |
+
+**顺序是关键。** 原来的顺序是 `google`(3) → `gemini`(6)，`pa.googleapis.com` 通配放在 Google 组会把 AI 具名条目全抢走。改成：
+
+```yaml
+rules:
+  - RULE-SET,google_fcm,📢 谷歌FCM
+  - RULE-SET,tiktok,🎵 TikTok
+  - RULE-SET,gemini,🤖 OpenAi       ← 具名优先
+  - RULE-SET,ai_all,🤖 OpenAi
+  - RULE-SET,muse,🤖 OpenAi
+  - RULE-SET,google,Google          ← pa 通配兜底
+  - RULE-SET,meta,📱 Meta
+  - RULE-SET,taiwan_media,📺 台湾媒体
+```
+
+这样：AI 具名条目先命中 → 剩下的 `*-pa` 落到 Google 组 → 未来 Google 新增的 `-pa` 域名自动覆盖，不会再有漏网。
+
+### 验证（`mihomo v1.19.14`，AI 组指 REJECT）
+
+```
+命中 🤖 OpenAi 13/13（000 = 被 REJECT）
+  growth-pa  notifications-pa  signaler-pa  robinfrontend-pa
+  feedback-pa  semanticlocation-pa  alkalicore-pa  aisandbox-pa
+  gemini.google.com  bard.google.com  aistudio.google.com
+  notebooklm.google.com  generativelanguage.googleapis.com
+
+落到 Google / FCM 11/11（真实状态码 = DIRECT）
+  accounts-pa 404   mail-pa 404   drive-pa 404   playstore-pa 404
+  oauth2-pa 404     cloudmessaging-pa 404   firebaseinstallations 404
+  play.google.com 302   gmail.com 301   www.google.com 200   x.com 200
+```
+
+provider 加载：`google_fcm 17 / gemini 58 / ai_all 213 / google 100`
+
+### 顺带补的
+
+`GoogleFCM.list` 原来只有 12 条 mtalk，**没有 `fcm.googleapis.com`**（截图里 `fcm.googleapis.com` 直连也是 404，但那是因为 Google 本来就不给根路径）。已补：
+
+```
+fcm.googleapis.com
+cloudmessaging-pa.googleapis.com
+firebaseinstallations-pa.googleapis.com
+firebaseinstallations.googleapis.com
+firebaseinstallations.googleapis.cn
+```

@@ -475,7 +475,7 @@ rule-providers:
   google:
     type: http
     behavior: domain
-    url: http://134.185.85.251/dl/google-20261104.yaml
+    url: http://134.185.85.251/dl/google-20261105.yaml
     path: ./ruleset/google.yaml
     interval: 86400
     proxy: DIRECT
@@ -496,14 +496,14 @@ rule-providers:
   gemini:
     type: http
     behavior: domain
-    url: http://134.185.85.251/dl/gemini-20261104.yaml
+    url: http://134.185.85.251/dl/gemini-20261105.yaml
     path: ./ruleset/gemini.yaml
     interval: 86400
     proxy: DIRECT
   google_fcm:
     type: http
     behavior: domain
-    url: http://134.185.85.251/dl/google-fcm-20261104.yaml
+    url: http://134.185.85.251/dl/google-fcm-20261105.yaml
     path: ./ruleset/google_fcm.yaml
     interval: 86400
     proxy: DIRECT
@@ -524,13 +524,15 @@ rule-providers:
     proxy: DIRECT
 
 rules:
+  # ---- 精确匹配优先：FCM 推送 / TikTok / AI 具名域名 ----
   - RULE-SET,google_fcm,📢 谷歌FCM
   - RULE-SET,tiktok,🎵 TikTok
-  - RULE-SET,google,Google
-  - RULE-SET,meta,📱 Meta
-  - RULE-SET,muse,🤖 OpenAi
   - RULE-SET,gemini,🤖 OpenAi
   - RULE-SET,ai_all,🤖 OpenAi
+  - RULE-SET,muse,🤖 OpenAi
+  # ---- Google 组：含 pa.googleapis.com 通配，必须排在 AI 具名之后 ----
+  - RULE-SET,google,Google
+  - RULE-SET,meta,📱 Meta
   - RULE-SET,taiwan_media,📺 台湾媒体
   - RULE-SET,playstore_0,🚀 节点选择
   - RULE-SET,cfnat_1,🎯 全球直连
