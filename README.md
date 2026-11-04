@@ -27,7 +27,7 @@
 | `TaiwanMedia.list` | 15 | 台湾流媒体全集：LiTV / 4GTV / OFiii / 巴哈姆特 / Hami Video / KKTV / friDay / LINE TV / myVideo / CatchPlay |
 
 > `Gemini-Full.list` 取代上游 `Gemini.list`（13 条，2025-06 停更）。
-> `GooglePlay-Full.list` 取代上游 `PlayStore.list`（6 条）。
+> `Google.list` 合并取代上游 `PlayStore.list`（6 条）+ 原 `X.list` + 原 `GooglePlay-Full.list`。
 > 旧文件保留，不删，方便回退。
 
 ### `Clash/domain/*.yaml` — domain 格式（`behavior: domain`）
@@ -40,9 +40,9 @@
 
 | 项目 | 原有 | 变动 | 现在 |
 |---|---:|---|---:|
-| 策略组 | 27 | +5（🎵 TikTok / 🐦 推特X / 📱 Meta / ▶️ 谷歌商店 / 📺 台湾媒体）<br>-8（奈飞 / 哔哩哔哩 / 微软×3 / 游戏平台 / 网易音乐 / 巴哈姆特） | **24** |
-| rule-provider | 41 | +9 / -13 | **37** |
-| 规则 | 43 | +9 / -13 | **39** |
+| 策略组 | 27 | +4（🎵 TikTok / Google / 📱 Meta / 📺 台湾媒体）<br>-8（奈飞 / 哔哩哔哩 / 微软×3 / 游戏平台 / 网易音乐 / 巴哈姆特） | **23** |
+| rule-provider | 41 | +8 / -13 | **36** |
+| 规则 | 43 | +8 / -13 | **38** |
 
 - `🤖 OpenAi` 组复用，Muse / Gemini / AI-All 三条规则都指向它
 - `📢 谷歌FCM` 组复用，只换用 12 条完整版 provider（原 `googlefcm_6` 只有部分节点）
@@ -153,7 +153,7 @@ category-ai-!cn   → AI-All
 google-gemini     → Gemini-Full
 tiktok            → TikTok
 twitter           → X
-google-play       → GooglePlay-Full
+google            → Google（Play + X + 账号 + Gmail）
 googlefcm         → GoogleFCM
 meta (muse 部分)  → Muse
 ```
@@ -288,8 +288,100 @@ workplace.com     oculus.com
   x.com 200 / play.google.com 302 / www.baidu.com 200
 ```
 
-### 顺带补全的两个列表
+### 已并入 `Google` 组
 
-**`X.list` 25 → 28 条** —— 原来漏了 `grok.com`（Grok 是 X 的 AI，走同一套 CDN）、`twimg.co`、`twimg.org`。
+`X.list`（28 条）和 `GooglePlay-Full.list`（22 条）已删除，内容合进 `Google.list`。详见下面「Google 组」一节。
 
-**`GooglePlay-Full.list` 21 → 22 条** —— 原来 `android.clients.google.com` 重复了两遍，`DOMAIN` 和 `DOMAIN-SUFFIX` 混用有冗余。已去重并统一成 `DOMAIN-SUFFIX`，另补 `ggpht.com` / `android.com` / `services.googleapis.cn`。
+---
+
+## 🔍 Google 组：Play + X + 账号 + Gmail 合并
+
+`▶️ 谷歌商店` 和 `🐦 推特X` 两个组合并成一个 `Google`，另补 Google 账号、登录、Gmail 邮箱。
+
+### 为什么 X 能并进来
+
+X 支持 Google 账号登录。OAuth 流程是：
+
+```
+X app  → accounts.google.com（选账号、输密码）
+       → 回跳 x.com（拿 code 换 token）
+```
+
+如果两组分开，`accounts.google.com` 走 A 节点、`x.com` 走 B 节点，X 会判定「同一会话换了个国家」，轻则要手机验证，重则直接锁号。合并成一组，**出口天然一致**，这个坑就没了。
+
+### 99 条构成
+
+| 分节 | 条数 | 内容 |
+|---|---|---|
+| Google 账号 / 登录 / 身份 | 26 | `accounts.google.com` + 12 个国家版、`oauth2`、`securetoken`、`identitytoolkit`、`myaccount`、`people`、`passwords`、`pay` |
+| Gmail / 邮箱 | 6 | `gmail.com`、`mail.google.com`、`inbox`、`googlemail.com`、`m.gmail.com`、`mail.googleusercontent.com` |
+| Google 云服务 | 11 | `calendar` / `drive` / `photos` / `keep` / `meet` / `chat` / `maps` / `translate` / `store` / `voice` / `notification` |
+| Google Play 商店 | 22 | Play API + 图片 + APK 下载 CDN `gvt0-9` + 设备注册 |
+| Google 静态 / CDN / 短链 | 6 | `gstatic.com`、`g.co`、`goo.gl`、`withgoogle.com` |
+| X / Twitter | 28 | `x.com` + `twitter.com` + `twimg` 图片/视频 CDN + `t.co` + `grok.com` |
+
+### 故意不收的（会被前面的规则抢走，收了是浪费）
+
+| 域名 | 归谁 |
+|---|---|
+| `fcm.googleapis.com` / `firebaseinstallations` / `mtalk.google.com` | 📢 谷歌FCM |
+| `gemini.google.com` / `bard.google.com` / `aistudio.google.com` | 🤖 OpenAi |
+| `youtube.com` / `ytimg.com` / `googlevideo.com` | 📹 油管视频 |
+| `doubleclick` / `googleadservices` / `google-analytics` | 🛑 广告拦截 |
+
+**特别注意 `accounts.youtube.com` 收进来了** —— 它是 YouTube 的**登录**入口，不是看视频。看视频走 `youtube.com`，仍然归 📹 油管视频。这样登录页和视频页出口一致，Google 不会判定异地。
+
+### 也不收 `googleusercontent.com` 整域
+
+这个域太宽：`blogger.googleusercontent.com`、`lh3.googleusercontent.com`（图片）、`mail.googleusercontent.com`、`play-lh.googleusercontent.com`……全收会把大量非 Google 服务的静态资源也拖进来。所以只按用途收 `mail.` / `play-lh.` / `play-games.` 三个子域。
+
+### 组内顺序
+
+```yaml
+- name: Google
+  type: select
+  proxies:
+    - 🚀 节点选择      # ← 默认，跟主出口一致
+    - ♻️ 自动选择
+    - 🇺🇲 美国节点
+    - 🇸🇬 狮城节点
+    - 🇭🇰 香港节点
+    - 🇯🇵 日本节点
+    - 🇹🇼 台湾节点
+    - ☑️ 手动切换
+    - DIRECT
+```
+
+默认 `🚀 节点选择` 而不是固定某地区——Google 账号对 IP 跳变极敏感，跟主出口保持一致最稳。
+
+### 验证
+
+`mihomo v1.19.14`，`RULE-SET,google` 指向 `REJECT`：
+
+```
+命中 32/32：
+  账号  accounts / accounts.youtube / myaccount / myactivity / oauth2
+        securetoken / identitytoolkit / www.googleapis / people
+        passwords / pay
+  邮箱  gmail.com / mail.google.com / inbox.google.com / googlemail.com
+  云    calendar / drive / photos / meet
+  Play  play.google.com / play.googleapis.com / play-lh.googleusercontent.com
+        dl.google.com / redirector.gvt1.com / android.clients.google.com
+  X     x.com / twitter.com / api.x.com / t.co / pbs.twimg.com
+        video.twimg.com / grok.com
+
+未误伤 10/10：
+  www.youtube.com 200 / youtube.com 301 / i.ytimg.com 404
+  fcm.googleapis.com 404 / gemini.google.com 200
+  www.google.com 200 / www.netflix.com 302 / www.baidu.com 200
+  www.facebook.com 200 / mtalk.google.com 000（纯 DIRECT 对照也是 000，域名本身不通）
+```
+
+### ⚠️ 合并后的一个代价
+
+X 对机房 IP 的风控比 Google 更狠。合并后 X 和 Google 账号共用一个出口：
+
+- 出口被 Google 标记 → X 也受影响
+- 出口被 X 标记 → Google 登录也受影响
+
+如果以后发现 X 频繁要手机验证，把 `Google` 组切到 `☑️ 手动切换` 里一个家宽/原生 IP 节点，别用机房 IP。
