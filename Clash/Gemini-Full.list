@@ -1,8 +1,9 @@
 # NAME: Gemini-Full
 # Google Gemini / AI Studio / NotebookLM / Antigravity / DeepMind
 # pa.googleapis.com 具名条目必须排在 Google 组的 pa 通配之前
+# signalr-pa 与 signaler-pa 是两个不同的域名，都要收
 
-# TOTAL: 58
+# TOTAL: 59
 
 DOMAIN,ai.google.dev
 DOMAIN,alkalicore-pa.clients6.google.com
@@ -60,5 +61,6 @@ DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
 DOMAIN-SUFFIX,robinfrontend-pa.googleapis.com
 DOMAIN-SUFFIX,semanticlocation-pa.googleapis.com
 DOMAIN-SUFFIX,signaler-pa.googleapis.com
+DOMAIN-SUFFIX,signalr-pa.googleapis.com
 DOMAIN-SUFFIX,stitch.withgoogle.com
 DOMAIN-SUFFIX,webchannel-alkalimakersuite-pa.googleapis.com

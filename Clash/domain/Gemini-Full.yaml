@@ -55,5 +55,6 @@ payload:
   - '+.robinfrontend-pa.googleapis.com'
   - '+.semanticlocation-pa.googleapis.com'
   - '+.signaler-pa.googleapis.com'
+  - '+.signalr-pa.googleapis.com'
   - '+.stitch.withgoogle.com'
   - '+.webchannel-alkalimakersuite-pa.googleapis.com'
