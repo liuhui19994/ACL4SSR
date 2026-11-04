@@ -750,7 +750,7 @@ rule-providers:
   mytvsuper:
     type: http
     behavior: domain
-    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/main/Clash/domain/MyTVSuper.yaml
+    url: https://raw.githubusercontent.com/liuhui19994/ACL4SSR/8328450b6300400f17f56b868b85111a9cd9e4ca/Clash/domain/MyTVSuper.yaml
     path: ./ruleset/mytvsuper.yaml
     interval: 86400
     proxy: DIRECT
