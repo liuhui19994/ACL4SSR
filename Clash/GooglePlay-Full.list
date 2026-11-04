@@ -1,0 +1,25 @@
+# 内容：Google Play 商店
+# 说明：含 APK 下载 CDN gvt1/2/3，取代原 PlayStore.list(6条)
+# 数量：21条
+# 更新：2026-11-04
+DOMAIN-SUFFIX,googleplay.com
+DOMAIN-SUFFIX,xn--ngstr-lra8j.com
+DOMAIN-SUFFIX,play-fe.googleapis.com
+DOMAIN-SUFFIX,play-games.googleusercontent.com
+DOMAIN-SUFFIX,play-lh.googleusercontent.com
+DOMAIN-SUFFIX,play.google.com
+DOMAIN-SUFFIX,play.googleapis.com
+DOMAIN,redirector.c.play.google.com
+DOMAIN-SUFFIX,gvt0.com
+DOMAIN-SUFFIX,gvt1.com
+DOMAIN-SUFFIX,gvt2.com
+DOMAIN-SUFFIX,gvt3.com
+DOMAIN-SUFFIX,gvt5.com
+DOMAIN-SUFFIX,gvt6.com
+DOMAIN-SUFFIX,gvt7.com
+DOMAIN-SUFFIX,gvt9.com
+DOMAIN,dl.google.com
+DOMAIN,redirector.gvt1.com
+DOMAIN,android.clients.google.com
+DOMAIN,c.android.clients.google.com
+DOMAIN-SUFFIX,android.clients.google.com

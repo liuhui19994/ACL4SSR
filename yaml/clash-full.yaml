@@ -1,0 +1,191 @@
+# ==============================================================================
+#  Clash / Mihomo 完整配置模板
+#  基于 cmliu/ACL4SSR 扩展  ·  2026-11-04
+#
+#  分组说明：
+#    🤖 OpenAi       ChatGPT / Claude / Grok / Perplexity / Copilot / Gemini / Muse
+#    🎵 TikTok       TikTok 全量（含 CDN / 直播 / Shop）
+#    🐦 推特X        X / Twitter（含 twimg 图片视频 CDN）
+#    ▶️ 谷歌商店     Google Play（含 APK 下载 CDN）
+#    📢 谷歌FCM      Google 推送（必须稳定，不要和商店混一起）
+#
+#  用法：把 proxies: 换成你自己的节点，然后导入 OpenClash / Clash Verge
+# ==============================================================================
+
+mixed-port: 7890
+allow-lan: false
+bind-address: 127.0.0.1
+ipv6: false
+mode: rule
+log-level: info
+external-controller: 127.0.0.1:9090
+unified-delay: true
+tcp-concurrent: true
+global-client-fingerprint: chrome
+
+dns:
+  enable: true
+  ipv6: false
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  use-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - geosite:cn
+    - geosite:apple
+    - "*.apple.com"
+    - "*.icloud.com"
+    - "*.mzstatic.com"
+    - "*.aaplimg.com"
+    - "*.cdn-apple.com"
+  nameserver:
+    - https://dns.cloudflare.com/dns-query
+    - https://dns.google/dns-query
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  respect-rules: true
+
+# ------------------------------------------------------------------------------
+# 在这里填你的节点
+# ------------------------------------------------------------------------------
+proxies:
+  - {name: "占位节点-删掉我", type: socks5, server: 127.0.0.1, port: 1080}
+
+proxy-groups:
+  - name: 🚀 节点选择
+    type: select
+    proxies: [♻️ 自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇸 美国节点, ☑️ 手动切换, DIRECT]
+
+  - name: ♻️ 自动选择
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    proxies: [🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点]
+
+  - name: ☑️ 手动切换
+    type: select
+    proxies: [占位节点-删掉我]
+
+  - name: 🇭🇰 香港节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies: [占位节点-删掉我]
+
+  - name: 🇯🇵 日本节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies: [占位节点-删掉我]
+
+  - name: 🇸🇬 狮城节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies: [占位节点-删掉我]
+
+  - name: 🇺🇸 美国节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies: [占位节点-删掉我]
+
+  # ---------- 本模板新增的功能组 ----------
+  - name: 🤖 OpenAi
+    type: select
+    proxies: [🚀 节点选择, ♻️ 自动选择, 🇺🇸 美国节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇭🇰 香港节点, ☑️ 手动切换, DIRECT]
+
+  - name: 🎵 TikTok
+    type: select
+    proxies: [🇺🇸 美国节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🚀 节点选择, ☑️ 手动切换, DIRECT]
+
+  - name: 🐦 推特X
+    type: select
+    proxies: [🚀 节点选择, ♻️ 自动选择, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇭🇰 香港节点, ☑️ 手动切换, DIRECT]
+
+  - name: ▶️ 谷歌商店
+    type: select
+    proxies: [🚀 节点选择, 🇭🇰 香港节点, 🇯🇵 日本节点, DIRECT]
+
+  - name: 📢 谷歌FCM
+    type: select
+    proxies: [🚀 节点选择, ♻️ 自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, DIRECT]
+
+  - name: 🎯 全球直连
+    type: select
+    proxies: [DIRECT, 🚀 节点选择]
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies: [🚀 节点选择, ♻️ 自动选择, DIRECT, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇸 美国节点]
+
+rule-providers:
+  tiktok:
+    type: http
+    behavior: domain
+    url: "http://134.185.85.251/dl/tiktok-20261104.yaml"
+    path: ./ruleset/tiktok.yaml
+    interval: 86400
+    proxy: DIRECT
+  x_twitter:
+    type: http
+    behavior: domain
+    url: "http://134.185.85.251/dl/x-twitter-20261104.yaml"
+    path: ./ruleset/x_twitter.yaml
+    interval: 86400
+    proxy: DIRECT
+  muse:
+    type: http
+    behavior: domain
+    url: "http://134.185.85.251/dl/muse-20261104.yaml"
+    path: ./ruleset/muse.yaml
+    interval: 86400
+    proxy: DIRECT
+  gemini:
+    type: http
+    behavior: domain
+    url: "http://134.185.85.251/dl/gemini-20261104.yaml"
+    path: ./ruleset/gemini.yaml
+    interval: 86400
+    proxy: DIRECT
+  google_play:
+    type: http
+    behavior: domain
+    url: "http://134.185.85.251/dl/google-play-20261104.yaml"
+    path: ./ruleset/google_play.yaml
+    interval: 86400
+    proxy: DIRECT
+  google_fcm:
+    type: http
+    behavior: domain
+    url: "http://134.185.85.251/dl/google-fcm-20261104.yaml"
+    path: ./ruleset/google_fcm.yaml
+    interval: 86400
+    proxy: DIRECT
+  ai_all:
+    type: http
+    behavior: domain
+    url: "http://134.185.85.251/dl/ai-all-20261104.yaml"
+    path: ./ruleset/ai_all.yaml
+    interval: 86400
+    proxy: DIRECT
+
+rules:
+  # FCM 必须最先匹配，否则会被 Play 规则抢走
+  - RULE-SET,google_fcm,📢 谷歌FCM
+  - RULE-SET,google_play,▶️ 谷歌商店
+  - RULE-SET,tiktok,🎵 TikTok
+  - RULE-SET,x_twitter,🐦 推特X
+  - RULE-SET,muse,🤖 OpenAi
+  - RULE-SET,gemini,🤖 OpenAi
+  - RULE-SET,ai_all,🤖 OpenAi
+  # 兜底
+  - GEOIP,CN,🎯 全球直连
+  - MATCH,🐟 漏网之鱼
+
+profile:
+  store-selected: true

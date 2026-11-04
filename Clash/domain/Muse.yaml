@@ -1,0 +1,10 @@
+# Meta Muse AI / Meta AI
+# 
+# 生成: 2026-11-04 21:05:19 (UTC+8)   条数: 4
+# 源: MetaCubeX/meta-rules-dat geosite
+# 用法: rule-providers -> behavior: domain, format: yaml
+payload:
+  - '+.muse.ai'
+  - '+.meta.ai'
+  - '+.metaaivm.com'
+  - '+.metaaiusercontent.com'
