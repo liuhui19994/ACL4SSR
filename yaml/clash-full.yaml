@@ -517,7 +517,7 @@ rule-providers:
   taiwan_media:
     type: http
     behavior: domain
-    url: http://134.185.85.251/dl/taiwan-media-20261104.yaml
+    url: http://134.185.85.251/dl/taiwan-media-20261104b.yaml
     path: ./ruleset/taiwan_media.yaml
     interval: 86400
     proxy: DIRECT

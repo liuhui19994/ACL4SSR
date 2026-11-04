@@ -1,12 +1,33 @@
 # NAME: TaiwanMedia
-# 台湾流媒体：LiTV / 4GTV / OFiii
-# 来源: DNS 实测 + 证书 SAN 核验 + blackmatrix7 (LiTV)
-# 注意: OFiii 后端由 LiTV 提供（页面引用 p-cdnstatic.svc.litv.tv / fino.svc.litv.tv）
-#       litv.tv 通配已覆盖这两条，无需单列
-# DOMAIN-SUFFIX: 5
-# TOTAL: 5
+# 台湾流媒体 / 影视平台  —— 全部按 IP 锁区，必须走台湾落地
+# 来源: DNS 实测 + 证书 SAN + 首页 HTML 三路交叉，逐条验证（2026-11-04）
+#
+# 注意 1: OFiii 后端就是 LiTV —— ofiii.com 首页引用 p-cdnstatic.svc.litv.tv 75 次，
+#         API 在 fino.svc.litv.tv，所以 +.litv.tv 一条通配即覆盖 OFiii 的 CDN 与 API
+# 注意 2: 巴哈姆特现站在 gamer.com.tw（bahamut.com.tw 裸域已无任何 A/AAAA 记录）
+# 注意 3: 以下条目【故意不收】，因为会误伤：
+#         digicert.com / gvt1.com / viblast.com / hinet.net   —— blackmatrix7 Bahamut 里的过宽条目
+#         line-cdn.net / line-scdn.net                        —— LINE 全球 CDN，会连聊天一起劫走
+#         fetnet.net                                          —— 远传电信全站，含 ISP 业务
+# 注意 4: blackmatrix7 里已失效的条目【已剔除】：
+#         litvfreemobile-hichannel.cdn.hinet.net (NXDOMAIN)
+#         kktv.com.tw / kktv-theater.kk.stream   (NXDOMAIN，KKTV 已迁 kktv.me)
+#         vidol.tv                                (NXDOMAIN，Vidol 已关站)
+
+# DOMAIN-SUFFIX: 15
+# TOTAL: 15
 DOMAIN-SUFFIX,litv.tv
-DOMAIN-SUFFIX,litvfreemobile-hichannel.cdn.hinet.net
 DOMAIN-SUFFIX,4gtv.tv
 DOMAIN-SUFFIX,ofiii.com
 DOMAIN-SUFFIX,ofiii.tv
+DOMAIN-SUFFIX,gamer.com.tw
+DOMAIN-SUFFIX,bahamut.akamaized.net
+DOMAIN-SUFFIX,hamivideo.hinet.net
+DOMAIN-SUFFIX,ott.hinet.net
+DOMAIN-SUFFIX,hls-hichannel.cdn.hinet.net
+DOMAIN-SUFFIX,kktv.me
+DOMAIN-SUFFIX,friday.tw
+DOMAIN-SUFFIX,linetv.tw
+DOMAIN-SUFFIX,chocotv.com.tw
+DOMAIN-SUFFIX,myvideo.net.tw
+DOMAIN-SUFFIX,catchplay.com

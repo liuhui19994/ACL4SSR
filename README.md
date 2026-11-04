@@ -23,7 +23,7 @@
 | `GooglePlay-Full.list` | 21 | Play API + 图片 + **APK 下载 CDN gvt1/2/3** + 设备注册 |
 | `GoogleFCM.list` | 12 | FCM 推送全部 mtalk 节点 |
 | `AI-All.list` | 213 | ChatGPT / Claude / Grok / Perplexity / Copilot 等全量 |
-| `TaiwanMedia.list` | 5 | LiTV / 4GTV / OFiii（台湾流媒体） |
+| `TaiwanMedia.list` | 15 | 台湾流媒体全集：LiTV / 4GTV / OFiii / 巴哈姆特 / Hami Video / KKTV / friDay / LINE TV / myVideo / CatchPlay |
 
 > `Gemini-Full.list` 取代上游 `Gemini.list`（13 条，2025-06 停更）。
 > `GooglePlay-Full.list` 取代上游 `PlayStore.list`（6 条）。
@@ -158,3 +158,45 @@ meta (muse 部分)  → Muse
 ```
 
 `muse.ai` 的子域清单额外用 crt.sh 证书透明度日志核对过，共 29 个（`api` / `api1` / `api2` / `auth` / `files` / `live` / `vv` / `vv1-0-0` / `vv1-0-1` / `vv2-0-0` / `vv2-0-1` / `m00` / `m01` / `z` 等），`*.muse.ai` 一条通配全部覆盖。
+
+---
+
+## 两份配置怎么选
+
+### `yaml/clash-full.yaml` —— 自建节点（回源 / CF SaaS）
+
+`proxies:` 里是 **9 条占位节点**（`192.0.2.1–9`，TEST-NET-1 保留段，永远连不上）。
+必须逐条把 `server` / `port` / `password` / `uuid` 换成你自己的节点，**`name` 一个字都不能改** ——
+5 个地区 `load-balance` 组是靠名字精确匹配的，改了名字整个配置起不来。
+
+### `yaml/clash-airport.yaml` —— 机场订阅（推荐现在用这个）
+
+**没有 `proxies:` 段，一条占位节点都没有。** 节点由 `proxy-providers.airport` 从你的机场订阅实时拉取：
+
+```yaml
+proxy-providers:
+  airport:
+    type: http
+    url: "https://PASTE-YOUR-AIRPORT-SUBSCRIPTION-URL-HERE"   # ← 只改这一行
+    path: ./providers/airport.yaml
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+```
+
+5 个地区组和 `☑️ 手动切换` 都改成 `use: [airport]`，靠 `filter:` 从机场节点里挑：
+
+| 组 | filter |
+|---|---|
+| 🇭🇰 香港节点 | `港\|HK\|hk\|Hong Kong\|HongKong\|hongkong\|HKG` |
+| 🇹🇼 台湾节点 | `台\|新北\|彰化\|TW\|Taiwan\|TPE\|KHH` |
+| 🇯🇵 日本节点 | `日本\|川日\|东京\|大阪\|泉日\|埼玉\|沪日\|深日\|[^-]日\|JP\|Japan\|Tokyo\|NRT\|KIX` |
+| 🇸🇬 狮城节点 | `新加坡\|坡\|狮城\|SG\|Singapore\|SIN` |
+| 🇺🇲 美国节点 | `美\|波特兰\|达拉斯\|俄勒冈\|…\|US\|United States\|ATL\|…\|SJC` |
+
+★ 如果你的机场节点命名跟上面这些关键词对不上（比如叫 `HK-01`、`HongKong Premium`），
+对应地区组会是空的。改 `filter:` 的正则就行，不用动别的。
+
+★ 机场节点名里带倍率后缀（`| 0.5x`）不影响，正则只做包含匹配。
